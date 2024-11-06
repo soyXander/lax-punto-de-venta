@@ -11,6 +11,7 @@ app.get("/", (req, res) => {
   res.send("Hola mundo!");
 });
 
+//Uso de enrutador de Usuario
 app.use("/app/usuarios", routerUsuarios);
 
 app.listen(PORT, () => {

@@ -23,6 +23,10 @@ router.post("/", (req, res) => {
       .json({ error: "Ya existe un usuario con el mismo nombre de usuario" });
     return;
   }
+
+  const usuario = { id, nombre, apellido, nombre_usuario, contraseña };
+  usuarios.push(usuario);
+  res.status(201).json(usuario);
 });
 
 export default router;

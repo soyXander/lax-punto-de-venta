@@ -27,6 +27,8 @@ router.post("/", (req, res) => {
   const usuario = { id, nombre, apellido, nombre_usuario, contraseña };
   usuarios.push(usuario);
   res.status(201).json(usuario);
+
+  id++;
 });
 
 export default router;

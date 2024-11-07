@@ -1,11 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Menu from './componentes/Menu';
-import Productos from './paginas/Productos';
-import Ventas from './paginas/Ventas';
-import Inventario from './paginas/Inventario';
-import Inventario from './paginas/Usuarios';
-import Usuarios from './paginas/usuarios';
+import Productos from './paginas/productos.jsx';
+import Ventas from './paginas/ventas.jsx';
+import Inventario from './paginas/inventario.jsx';
+import Usuarios from './paginas/usuarios.jsx';
 
 function App() {
   return (

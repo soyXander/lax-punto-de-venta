@@ -17,6 +17,12 @@ router.post("/", (req, res) => {
     res.status(400).json({ error: "Datos incompletos" });
     return;
   }
+  if (usuarios.some((usuario) => usuario.nombre_usuario === nombre_usuario)) {
+    res
+      .status(400)
+      .json({ error: "Ya existe un usuario con el mismo nombre de usuario" });
+    return;
+  }
 });
 
 export default router;

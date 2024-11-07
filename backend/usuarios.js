@@ -32,6 +32,9 @@ router.post("/", (req, res) => {
 
   //Actualizar ususario por Id
   router.put("/:id", (req, res) => {});
+
+  // Eliminar un usuario por Id
+  router.delete("/:id", (req, res) => {});
 });
 
 export default router;

@@ -29,6 +29,9 @@ router.post("/", (req, res) => {
   res.status(201).json(usuario);
 
   id++;
+
+  //Actualizar ususario por Id
+  router.put("/:id", (req, res) => {});
 });
 
 export default router;

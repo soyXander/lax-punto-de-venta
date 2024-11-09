@@ -1,10 +1,11 @@
 import './App.css'
+import Menu from './components/menu'
 
 function App() {
 
   return (
     <>
-      <h1 className='text-3xl font-bold'>Hola mundo!</h1>
+      <Menu/>
     </>
   )
 }

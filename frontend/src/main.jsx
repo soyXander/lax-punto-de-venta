@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import App from './App.jsx'
+import Login from './pages/Login.jsx'
 import './index.css'
 
 const router = createBrowserRouter([
@@ -10,8 +11,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/usuarios",
-    element: <h1>Usuarios</h1>,
+    path: "/login",
+    element: <Login/>,
   },
 ])
 

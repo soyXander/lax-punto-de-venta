@@ -54,3 +54,6 @@ router.post("/", (req, res) => {
 
 // Actualizar cliente por ID
 router.put("/:id", (req, res) => {});
+
+// Eliminar cliente por ID
+router.delete("/:id", (req, res) => {});

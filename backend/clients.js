@@ -48,4 +48,6 @@ router.post("/", (req, res) => {
   };
   clientes.push(cliente);
   res.status(201).json(cliente);
+
+  id++;
 });

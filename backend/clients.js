@@ -28,4 +28,14 @@ router.post("/", (req, res) => {
     res.status(400).json({ error: "Datos incompletos" });
     return;
   }
+  if (
+    clientes.some(
+      (cliente) => cliente.correo_electronico === correo_electronico
+    )
+  ) {
+    res
+      .status(400)
+      .json({ error: "Ya existe un cliente con el mismo correo electrónico" });
+    return;
+  }
 });

@@ -38,4 +38,14 @@ router.post("/", (req, res) => {
       .json({ error: "Ya existe un cliente con el mismo correo electrónico" });
     return;
   }
+  const cliente = {
+    id,
+    nombre,
+    fecha_creacion,
+    fecha_modificacion,
+    telefono,
+    correo_electronico,
+  };
+  clientes.push(cliente);
+  res.status(201).json(cliente);
 });

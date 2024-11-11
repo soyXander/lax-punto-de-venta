@@ -8,3 +8,5 @@ let clientes = [];
 router.get("/", (req, res) => {
   res.send(clientes);
 });
+
+// Crear un nuevo cliente

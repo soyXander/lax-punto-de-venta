@@ -10,3 +10,4 @@ router.get("/", (req, res) => {
 });
 
 // Crear un nuevo cliente
+router.post("/", (req, res) => {});

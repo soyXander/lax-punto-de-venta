@@ -57,3 +57,5 @@ router.put("/:id", (req, res) => {});
 
 // Eliminar cliente por ID
 router.delete("/:id", (req, res) => {});
+
+export default router;

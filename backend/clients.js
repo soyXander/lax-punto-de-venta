@@ -53,3 +53,4 @@ router.post("/", (req, res) => {
 });
 
 // Actualizar cliente por ID
+router.put("/:id", (req, res) => {});

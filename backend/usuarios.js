@@ -1,40 +1,40 @@
-import express from "express";
+import express from "express"
 
-const router = express.Router();
+const router = express.Router()
 
-let usuarios = [];
-let id = 0;
+let usuarios = []
+let id = 0
 
 //Obtenemos todos los usuarios
 router.get("/", (req, res) => {
-  res.send(usuarios);
-});
+  res.send(usuarios)
+})
 
 //Crear usuario nuevo
 router.post("/", (req, res) => {
-  const { nombre, apellido, nombre_usuario, contraseña } = req.body;
+  const { nombre, apellido, nombre_usuario, contraseña } = req.body
   if (!nombre || !apellido || !nombre_usuario || !contraseña) {
-    res.status(400).json({ error: "Datos incompletos" });
-    return;
+    res.status(400).json({ error: "Datos incompletos" })
+    return
   }
   if (usuarios.some((usuario) => usuario.nombre_usuario === nombre_usuario)) {
     res
       .status(400)
-      .json({ error: "Ya existe un usuario con el mismo nombre de usuario" });
-    return;
+      .json({ error: "Ya existe un usuario con el mismo nombre de usuario" })
+    return
   }
 
-  const usuario = { id, nombre, apellido, nombre_usuario, contraseña };
-  usuarios.push(usuario);
-  res.status(201).json(usuario);
+  const usuario = { id, nombre, apellido, nombre_usuario, contraseña }
+  usuarios.push(usuario)
+  res.status(201).json(usuario)
 
-  id++;
+  id++
 
   //Actualizar ususario por Id
-  router.put("/:id", (req, res) => {});
+  router.put("/:id", (req, res) => {})
 
   // Eliminar un usuario por Id
-  router.delete("/:id", (req, res) => {});
-});
+  router.delete("/:id", (req, res) => {})
+})
 
-export default router;
+export default router

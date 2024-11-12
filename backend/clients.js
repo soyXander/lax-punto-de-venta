@@ -1,13 +1,13 @@
-import express from "express";
+import express from "express"
 
-const router = express.Router();
+const router = express.Router()
 
-let clientes = [];
+let clientes = []
 
 // Obtenemos todos los clientes
 router.get("/", (req, res) => {
-  res.send(clientes);
-});
+  res.send(clientes)
+})
 
 // Crear un nuevo cliente
 router.post("/", (req, res) => {
@@ -16,8 +16,8 @@ router.post("/", (req, res) => {
     fecha_creacion,
     fecha_modificacion,
     telefono,
-    correo_electronico,
-  } = req.body;
+    correo_electronico
+  } = req.body
   if (
     !nombre ||
     !fecha_creacion ||
@@ -25,8 +25,8 @@ router.post("/", (req, res) => {
     !telefono ||
     !correo_electronico
   ) {
-    res.status(400).json({ error: "Datos incompletos" });
-    return;
+    res.status(400).json({ error: "Datos incompletos" })
+    return
   }
   if (
     clientes.some(
@@ -35,8 +35,8 @@ router.post("/", (req, res) => {
   ) {
     res
       .status(400)
-      .json({ error: "Ya existe un cliente con el mismo correo electrónico" });
-    return;
+      .json({ error: "Ya existe un cliente con el mismo correo electrónico" })
+    return
   }
   const cliente = {
     id,
@@ -44,18 +44,18 @@ router.post("/", (req, res) => {
     fecha_creacion,
     fecha_modificacion,
     telefono,
-    correo_electronico,
-  };
-  clientes.push(cliente);
-  res.status(201).json(cliente);
+    correo_electronico
+  }
+  clientes.push(cliente)
+  res.status(201).json(cliente)
 
-  id++;
-});
+  id++
+})
 
 // Actualizar cliente por ID
-router.put("/:id", (req, res) => {});
+router.put("/:id", (req, res) => {})
 
 // Eliminar cliente por ID
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", (req, res) => {})
 
-export default router;
+export default router

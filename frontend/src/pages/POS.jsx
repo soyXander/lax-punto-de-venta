@@ -47,8 +47,26 @@ const POS = () => {
     },
   ]
 
+  const categorias = [
+    {
+      nombre: "Panaderia",
+    },
+    {
+      nombre: "Gaseosas",
+    },
+    {
+      nombre: "Fiambres",
+    },
+    {
+      nombre: "Carnes",
+    },
+    {
+      nombre: "Frutas",
+    },
+  ]
+
   return (
-    <div className="min-w-full flex flex-row justify-center items-start">
+    <div className="flex flex-row justify-center items-start gap-x-3">
       <div className="basis-3/4">
         <div className="flex justify-between">
           <button>+ AGREGAR PRODUCTO NUEVO</button>
@@ -57,7 +75,7 @@ const POS = () => {
             <a href="">🔎</a>
           </div>
         </div>
-        <div className="grid grid-cols-4 ">
+        <div className="grid grid-cols-4 overflow-y-scroll h-[70vh] ">
           {productos.map((producto, index) => (
             <button
               className="flex flex-col bg-blue-950 border rounded-lg p-3 m-1 justify-center items-center text-white"
@@ -68,16 +86,21 @@ const POS = () => {
               />
               <h2>{producto.nombre}</h2>
               <p>${producto.precio.toFixed(2)}</p>
-              <div>
-                <a className="bg-white px-2 text-black border rounded-full">-</a>
-                {producto.cantidad}
-                <a className="bg-white px-2 text-black border rounded-full">+</a>
-              </div>
+            </button>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-5 h-[20vh] ">
+          {categorias.map((categoria, index) => (
+            <button
+              className="flex flex-col bg-blue-950 border rounded-lg p-3 m-1 justify-center items-center text-white"
+              key={index}>
+              {categoria.nombre}
             </button>
           ))}
         </div>
       </div>
-      <div className="basis-1/4 flex flex-col">
+      <div className="basis-1/4 flex flex-col m-auto">
         <h2>Checkout</h2>
         <table className="table-fixed border">
           <thead>
@@ -89,14 +112,40 @@ const POS = () => {
             {productos.map((producto, index) => (
               <tr key={index}>
                 <td>{producto.nombre}</td>
-                <td>{producto.cantidad}</td>
+                <td>
+                  <span>-</span> {producto.cantidad} <span>+</span>
+                </td>
                 <td>${producto.precio.toFixed(2)}</td>
               </tr>
             ))}
           </thead>
         </table>
-        <div className="flex justify-end items-end">
-          <button className="bg-blue-950 text-white p-2 rounded-lg">
+        <ul>
+          <li className="flex justify-between">
+            <span>Descuento:</span>
+            <span>
+              $
+              <input
+                className="text-right w-20"
+                type="number"
+                placeholder="0.00"></input>
+            </span>
+          </li>
+          <li className="flex justify-between">
+            <span>Subtotal:</span>
+            <span>$0.00</span>
+          </li>
+          {/* <li>
+            <span>Impuestos:</span>
+            <span>$0.00</span>
+          </li> */}
+          <li className="flex justify-between">
+            <span>Total:</span>
+            <span>$0.00</span>
+          </li>
+        </ul>
+        <div className="flex w-full">
+          <button className="bg-blue-950 text-white p-2 rounded-lg w-full">
             Realizar pago
           </button>
         </div>

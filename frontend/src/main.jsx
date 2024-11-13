@@ -4,25 +4,33 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 // import App from './App.jsx'
 import Layout from "./pages/Layout.jsx"
 import Login from "./pages/Login.jsx"
- //import Listado from "./components/Listado.jsx"
+//import Listado from "./components/Listado.jsx"
 import "./index.css"
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout  />,
+    element: <Layout />,
   },
   {
     path: "/productos",
-    element: <Layout  />,
+    element: <Layout />,
   },
   {
     path: "/ventas",
     element: <Layout  />,
   },
   {
+    path: "/usuarios",
+    element: <Layout />,
+  },
+  {
+    path: "/clientes",
+    element: <Layout />,
+  },
+  {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
   },
 ])
 

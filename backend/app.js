@@ -10,6 +10,7 @@ const PORT = 3000
 // Conectar a la base de datos
 connectDB()
 app.use(cors())
+app.use(express.json())
 
 app.get("/", (req, res) => {
   res.send("Hola mundo!")

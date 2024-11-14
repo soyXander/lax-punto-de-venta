@@ -17,7 +17,7 @@ app.get("/", (req, res) => {
 })
 
 //Uso de enrutador de Usuario
-app.use("/app/usuarios", routerUsuarios)
+app.use("/api/usuarios", routerUsuarios)
 
 // Uso de enrutador de clientes
 app.use("/api/clientes", routerClientes)

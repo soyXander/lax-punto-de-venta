@@ -1,8 +1,8 @@
 import express from "express"
 import connectDB from "./config/db.js"
 import cors from "cors"
-import routerUsuarios from "./usuarios.js"
-import routerClientes from "./clients.js"
+import userRoutes from "./users.js"
+import clientRoutes from "./clients.js"
 
 const app = express()
 const PORT = 3000
@@ -17,10 +17,10 @@ app.get("/", (req, res) => {
 })
 
 //Uso de enrutador de Usuario
-app.use("/api/usuarios", routerUsuarios)
+app.use("/api/usuarios", userRoutes)
 
 // Uso de enrutador de clientes
-app.use("/api/clientes", routerClientes)
+app.use("/api/clientes", clientRoutes)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`)

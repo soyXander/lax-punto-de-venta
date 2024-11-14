@@ -1,8 +1,8 @@
+import cors from "cors"
 import express from "express"
 import connectDB from "./config/db.js"
-import cors from "cors"
-import userRoutes from "./users.js"
-import clientRoutes from "./clients.js"
+import clientRoutes from "./routes/clients.js"
+import userRoutes from "./routes/users.js"
 import initializeDB from "./utils/initializeDB.js"
 
 const app = express()

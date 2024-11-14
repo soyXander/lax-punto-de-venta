@@ -5,7 +5,7 @@ const initializeDB = async () => {
   try {
     // Crear roles predeterminados
     const rolesCount = await User.estimatedDocumentCount()
-    if (rolesCount < 1) {
+    if (!rolesCount) {
       const admin = new Role({ name: "admin" })
       const cashier = new Role({ name: "cashier" })
       await admin.save()
@@ -14,7 +14,7 @@ const initializeDB = async () => {
     }
     // Crear usuarios predeterminados
     const usersCount = await User.estimatedDocumentCount()
-    if (usersCount < 1) {
+    if (!usersCount) {
       const admin = new User({
         name: "Administrador",
         lastName: "POS",

@@ -1,4 +1,5 @@
 import express from "express"
+import connectDB from "./config/db.js"
 import cors from "cors"
 import routerUsuarios from "./usuarios.js"
 import routerClientes from "./clients.js"
@@ -6,6 +7,8 @@ import routerClientes from "./clients.js"
 const app = express()
 const PORT = 3000
 
+// Conectar a la base de datos
+connectDB()
 app.use(cors())
 
 app.get("/", (req, res) => {

@@ -4,7 +4,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "node --watch app.js",
+    "dev": "node --env-file=.env --watch app.js",
     "format": "prettier --write .",
     "lint": "eslint . ",
     "lint:fix": "eslint . --fix "
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "cors": "2.8.5",
-    "express": "4.21.1"
+    "express": "4.21.1",
+    "mongoose": "^8.8.1"
   }
 }

@@ -19,18 +19,24 @@ router.get("/", async (req, res) => {
 
 //Crear usuario nuevo
 router.post("/", async (req, res) => {
-  const { name, lastName, username, password, email, role = "cashier" } = req.body
+  const { name, lastName, username, password, email, roleName = "cashier" } = req.body
 
   try {
+    const role = await Role.findOne({ name: roleName })
+
+    if (!role) {
+      return res.status(400).json({ error: "Rol no valido" })
+    }
+
     const user = new User({
       name,
       lastName,
       username,
       password,
       email,
-      role_id: await Role.findOne({ name: role })
+      role_id: role._id
     })
-    user.save()
+    await user.save()
     res.status(201).json(user)
     console.log("Usuario creado:", user.name)
   } catch (error) {

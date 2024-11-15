@@ -1,13 +1,21 @@
 import express from "express"
+import Client from "../model/clients.js"
 
 const router = express.Router()
 
-let clientes = []
 
 // Obtenemos todos los clientes
-router.get("/", (req, res) => {
-  res.send(clientes)
-})
+router.get("/", async (req, res) => {
+  try {
+    const clients = await Client.find();
+    res.json(clients);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Error al obtener los clientes: " + error.message });
+  }
+});
 
 // Crear un nuevo cliente
 router.post("/", (req, res) => {
@@ -39,7 +47,6 @@ router.post("/", (req, res) => {
     return
   }
   const cliente = {
-    id,
     nombre,
     fecha_creacion,
     fecha_modificacion,
@@ -49,13 +56,13 @@ router.post("/", (req, res) => {
   clientes.push(cliente)
   res.status(201).json(cliente)
 
-  id++
+
 })
 
 // Actualizar cliente por ID
-router.put("/:id", (req, res) => {})
+// router.put("/:id", (req, res) => {})
 
 // Eliminar cliente por ID
-router.delete("/:id", (req, res) => {})
+// router.delete("/:id", (req, res) => {})
 
 export default router

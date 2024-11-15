@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt"
 import express from "express"
+import jwt from "jsonwebtoken"
 import User from "../models/user.js"
 import Role from "../models/role.js"
 
@@ -20,7 +21,14 @@ router.get("/", async (req, res) => {
 
 //Crear usuario nuevo
 router.post("/", async (req, res) => {
-  const { name, lastName, username, password, email, roleName = "cashier" } = req.body
+  const {
+    name,
+    lastName,
+    username,
+    password,
+    email,
+    roleName = "cashier"
+  } = req.body
 
   try {
     const role = await Role.findOne({ name: roleName })
@@ -41,7 +49,12 @@ router.post("/", async (req, res) => {
       role_id: role._id
     })
     await user.save()
-    res.status(201).json(user)
+    const token = jwt.sign(
+      { id: user._id, role: user.role_id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    )
+    res.status(201).json({ message: "Usuario creado con exito", token })
     console.log("Usuario creado:", user.name)
   } catch (error) {
     console.error(error)

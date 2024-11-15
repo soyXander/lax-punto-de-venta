@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt"
 import User from "../models/user.js"
 import Role from "../models/role.js"
 
@@ -15,11 +16,15 @@ const initializeDB = async () => {
     // Crear usuarios predeterminados
     const usersCount = await User.estimatedDocumentCount()
     if (!usersCount) {
+      const password = "1234"
+      const salt = await bcrypt.genSalt(10)
+      const hashedPassword = await bcrypt.hash(password, salt)
+
       const admin = new User({
         name: "Administrador",
         lastName: "POS",
         username: "admin",
-        password: "1234",
+        password: hashedPassword,
         email: "admin@email.com",
         role_id: await Role.findOne({ name: "admin" })
       })

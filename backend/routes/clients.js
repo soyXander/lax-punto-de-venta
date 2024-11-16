@@ -33,6 +33,13 @@ router.post("/", async(req, res) => {
       return res.status(400).json({error: "Email ya regustrado"})
     }
 
+    const client = new Client({
+      name,
+      lastname,
+      email,
+      phone,
+    })
+    await client.save();
   }
 })
 

@@ -10,7 +10,6 @@ router.get("/", async (req, res) => {
     const clients = await Client.find();
     res.json(clients);
   } catch (error) {
-    console.error(error);
     res
       .status(500)
       .json({ error: "Error al obtener los clientes: " + error.message });
@@ -18,45 +17,23 @@ router.get("/", async (req, res) => {
 });
 
 // Crear un nuevo cliente
-router.post("/", (req, res) => {
+router.post("/", async(req, res) => {
   const {
-    nombre,
-    fecha_creacion,
-    fecha_modificacion,
-    telefono,
-    correo_electronico
+  name,
+  lastname,
+  email,
+  phone,
   } = req.body
-  if (
-    !nombre ||
-    !fecha_creacion ||
-    !fecha_modificacion ||
-    !telefono ||
-    !correo_electronico
-  ) {
-    res.status(400).json({ error: "Datos incompletos" })
-    return
-  }
-  if (
-    clientes.some(
-      (cliente) => cliente.correo_electronico === correo_electronico
-    )
-  ) {
-    res
-      .status(400)
-      .json({ error: "Ya existe un cliente con el mismo correo electrónico" })
-    return
-  }
-  const cliente = {
-    nombre,
-    fecha_creacion,
-    fecha_modificacion,
-    telefono,
-    correo_electronico
-  }
-  clientes.push(cliente)
-  res.status(201).json(cliente)
 
+  
+  try{
+    const e_mail = await Client.findOne({email})
 
+    if(e_mail){
+      return res.status(400).json({error: "Email ya regustrado"})
+    }
+
+  }
 })
 
 // Actualizar cliente por ID

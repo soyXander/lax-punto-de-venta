@@ -40,6 +40,8 @@ router.post("/", async(req, res) => {
       phone,
     })
     await client.save();
+
+    res.status(201).json({ message: "Cliente creado con éxito", client });
   }
 })
 

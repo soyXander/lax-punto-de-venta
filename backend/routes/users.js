@@ -73,7 +73,7 @@ router.put("/:id", async (req, res) => {
     }
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      { ...req.body, updatedAt: Date.now() },
       { new: true }
     )
     res.json(updatedUser)

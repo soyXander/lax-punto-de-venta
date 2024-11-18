@@ -64,7 +64,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-//Actualizar ususario por Id
+// Actualizar usuario por Id
 router.put("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id)

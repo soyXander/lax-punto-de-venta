@@ -55,6 +55,8 @@ router.put("/:id", async (req, res) => {
       { ...req.body, updateAt: Date.now() },
       { new: true }
     )
+
+    res.json(updateClint)
   } catch {}
 })
 

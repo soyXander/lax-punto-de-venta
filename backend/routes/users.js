@@ -64,10 +64,38 @@ router.post("/", async (req, res) => {
   }
 })
 
-//Actualizar ususario por Id
-router.put("/:id", (req, res) => {})
+// Actualizar usuario por Id
+router.put("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" })
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, updatedAt: Date.now() },
+      { new: true }
+    )
+    res.json(updatedUser)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Error al actualizar el usuario: " + error })
+  }
+})
 
 // Eliminar un usuario por Id
-router.delete("/:id", (req, res) => {})
+router.delete("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" })
+    }
+    await User.findByIdAndDelete(req.params.id)
+    res.json({ message: "Usuario eliminado con éxito" })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Error al eliminar el usuario: " + error })
+  }
+})
 
 export default router

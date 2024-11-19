@@ -57,7 +57,9 @@ router.put("/:id", async (req, res) => {
     )
 
     res.json(updateClint)
-  } catch {}
+  } catch (error) {
+    res.status(500).json({ error: "Error al actualizar el cliente: " + error })
+  }
 })
 
 // Eliminar cliente por ID

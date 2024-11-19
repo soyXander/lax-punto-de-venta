@@ -1,61 +1,51 @@
 import express from "express"
+import Client from "../models/client.js"
 
 const router = express.Router()
 
-let clientes = []
-
 // Obtenemos todos los clientes
-router.get("/", (req, res) => {
-  res.send(clientes)
+router.get("/", async (req, res) => {
+  try {
+    const clients = await Client.find()
+    res.json(clients)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al obtener los clientes: " + error.message })
+  }
 })
 
 // Crear un nuevo cliente
-router.post("/", (req, res) => {
-  const {
-    nombre,
-    fecha_creacion,
-    fecha_modificacion,
-    telefono,
-    correo_electronico
-  } = req.body
-  if (
-    !nombre ||
-    !fecha_creacion ||
-    !fecha_modificacion ||
-    !telefono ||
-    !correo_electronico
-  ) {
-    res.status(400).json({ error: "Datos incompletos" })
-    return
-  }
-  if (
-    clientes.some(
-      (cliente) => cliente.correo_electronico === correo_electronico
-    )
-  ) {
-    res
-      .status(400)
-      .json({ error: "Ya existe un cliente con el mismo correo electrónico" })
-    return
-  }
-  const cliente = {
-    id,
-    nombre,
-    fecha_creacion,
-    fecha_modificacion,
-    telefono,
-    correo_electronico
-  }
-  clientes.push(cliente)
-  res.status(201).json(cliente)
+router.post("/", async (req, res) => {
+  const { name, lastname, email, phone } = req.body
 
-  id++
+  try {
+    const e_mail = await Client.findOne({ email })
+
+    if (e_mail) {
+      return res.status(400).json({ error: "Email ya regustrado" })
+    }
+
+    const client = new Client({
+      name,
+      lastname,
+      email,
+      phone
+    })
+    await client.save()
+
+    res.status(201).json({ message: "Cliente creado con éxito", client })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al crear el cliente: " + error.message })
+  }
 })
 
 // Actualizar cliente por ID
-router.put("/:id", (req, res) => {})
+// router.put("/:id", (req, res) => {})
 
 // Eliminar cliente por ID
-router.delete("/:id", (req, res) => {})
+// router.delete("/:id", (req, res) => {})
 
 export default router

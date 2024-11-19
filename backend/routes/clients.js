@@ -43,7 +43,15 @@ router.post("/", async (req, res) => {
 })
 
 // Actualizar cliente por ID
-router.put("/:id", async (req, res) => {})
+router.put("/:id", async (req, res) => {
+  try{
+    const client = await Client.findById(req.params.id)
+  if (!client){
+    return res.status(404).json({error: "Cliente no encontrado"})
+  }catch{
+    
+  }
+})
 
 // Eliminar cliente por ID
 // router.delete("/:id", (req, res) => {})

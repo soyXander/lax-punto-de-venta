@@ -1,3 +1,5 @@
+import { info } from 'autoprefixer';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -6,8 +8,8 @@ export default {
   ],
   theme: {
     colors: {
-      text: '#001524',
-      background: '#FFECD1',
+      neutral: '#001524',
+      base: '#FFECD1',
       primary: '#ff7b00',
       secundary:'#75290f',
       accent: '#14606c',

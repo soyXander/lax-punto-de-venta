@@ -1,12 +1,32 @@
-import './App.css'
+import "./App.css";
+import Card from "./components/Card.jsx";
 
 function App() {
-
   return (
     <>
-      <h1 className='text-3xl font-bold'>Hola mundo!</h1>
+      <section className="flex gap-x-4 p-4 justify-between">
+        <Card
+          titulo="Total de ventas"
+          imgUrl="https://via.placeholder.com/50 "
+        />
+        <Card
+          titulo="Total de expensas"
+          imgUrl="https://via.placeholder.com/50"
+        />
+         <Card
+          titulo="total de Clientes"
+          imgUrl="https://via.placeholder.com/50"
+        /> <Card
+        titulo="Total de Pedidos"
+        imgUrl="https://via.placeholder.com/50"
+      /> <Card
+      titulo="Compras totales"
+      imgUrl="https://via.placeholder.com/50"
+    />
+        
+      </section>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

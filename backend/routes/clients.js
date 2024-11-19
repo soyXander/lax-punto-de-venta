@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
 })
 
 // Actualizar cliente por ID
-// router.put("/:id", (req, res) => {})
+router.put("/:id", async (req, res) => {})
 
 // Eliminar cliente por ID
 // router.delete("/:id", (req, res) => {})

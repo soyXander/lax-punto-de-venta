@@ -63,6 +63,6 @@ router.put("/:id", async (req, res) => {
 })
 
 // Eliminar cliente por ID
-// router.delete("/:id", (req, res) => {})
+router.delete("/:id", async (req, res) => {})
 
 export default router

@@ -63,6 +63,13 @@ router.put("/:id", async (req, res) => {
 })
 
 // Eliminar cliente por ID
-router.delete("/:id", async (req, res) => {})
+router.delete("/:id", async (req, res) => {
+  try{
+    const client = await Client.findById(req.params.id)
+    if (!client) {
+      return res.status(404).json({ error: "Cliente no encontrado" })
+    }
+  }
+})
 
 export default router

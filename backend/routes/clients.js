@@ -64,13 +64,15 @@ router.put("/:id", async (req, res) => {
 
 // Eliminar cliente por ID
 router.delete("/:id", async (req, res) => {
-  try{
+  try {
     const client = await Client.findById(req.params.id)
     if (!client) {
       return res.status(404).json({ error: "Cliente no encontrado" })
     }
     await Client.findByIdAndDelete(req.params.id)
     res.json({ message: "Cliente eliminado con éxito" })
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar el cliente: " + error })
   }
 })
 

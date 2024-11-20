@@ -69,6 +69,8 @@ router.delete("/:id", async (req, res) => {
     if (!client) {
       return res.status(404).json({ error: "Cliente no encontrado" })
     }
+    await Client.findByIdAndDelete(req.params.id)
+    res.json({ message: "Cliente eliminado con éxito" })
   }
 })
 

@@ -14,3 +14,5 @@ router.get("/", async (req, res) => {
       .json({ error: "error al obtener los productos: " + error.message })
   }
 })
+
+export default router

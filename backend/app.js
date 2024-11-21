@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.js"
 import clientRoutes from "./routes/clients.js"
 import userRoutes from "./routes/users.js"
 import initializeDB from "./utils/initializeDB.js"
+import productRoutes from "./routes/products.js"
 
 const app = express()
 const PORT = 3000
@@ -39,6 +40,9 @@ app.get("/admin", validateToken, validateRole("admin"), (req, res) => {
 
 //Uso de enrutador de Usuario
 app.use("/api/usuarios", userRoutes)
+
+// Uso del enrutador de Productos
+app.use("/api/productos", productRoutes)
 
 // Uso de enrutador de clientes
 app.use("/api/clientes", clientRoutes)

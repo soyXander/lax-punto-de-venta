@@ -8,13 +8,12 @@ export default {
     extend: {
       colors: {
         neutral: '#001524',
-        base: '#FFECD1',
+        base: '#ffecd1',
         primary: '#ff7b00',
-        secundary:'#75290f',
+        secondary:'#75290f',
         accent: '#14606c'
       },
     },
   },
   plugins: [],
 }
-

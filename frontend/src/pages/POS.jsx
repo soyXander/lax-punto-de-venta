@@ -139,7 +139,7 @@ const POS = () => {
             ))}
           </div>
         </div>
-        <div className="flex flex-grow basis-1/4 flex-col justify-between bg-white shadow">
+        <div className="flex flex-grow basis-1/4 flex-col justify-between rounded-lg bg-white shadow">
           <div className="flex flex-col">
             <h2 className="my-4 font-bold text-neutral">Checkout</h2>
             <table className="table-fixed border">

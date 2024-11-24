@@ -7,8 +7,8 @@ const Layout = (props) => {
       <div className='bg-green-300 w-1/6'>
         <Menu />
       </div>
-      <div className='bg-blue-300 w-full'>
-        <header className='bg-yellow-300 h-'>
+      <div className='bg-neutral w-full'>
+        <header className='bg-base'>
           <h1>Header</h1>
         </header>
         <main>

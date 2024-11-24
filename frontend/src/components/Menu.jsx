@@ -1,13 +1,39 @@
+const menuItems = [{
+  name: "Inicio",
+  path: "/",
+},
+{
+  name: "POS",
+  path: "/pos",
+},
+{
+  name: "Productos",
+  path: "/productos",
+},
+{
+  name: "Ventas",
+  path: "/ventas",
+},
+{
+  name: "Usuarios",
+  path: "/usuarios",
+},
+{
+  name: "Clientes",
+  path: "/clientes",
+},]
+
 const Menu = () => {
   return (
-    <nav  className="bg-sky-700  text-white p-20 rounded-lg shadow px-10 ">
-<ul className="flex flex-wrap gap-20">
-        <li><a href="/"className="border rounded-lg px-20 py-5 bg-orange-500 text-white hover:bg-blue-900 transition duration-300">Inicio</a></li>
-        <li><a href="/pos"className="border rounded-lg px-20 py-5 bg-orange-500 text-white hover:bg-blue-900 transition duration-300">POS</a></li>
-        <li><a href="/productos"className=" border rounded-lg px-20 py-5 bg-orange-500 text-white  hover:bg-blue-900 transition duration-300">Productos</a></li>
-        <li><a href="/ventas"className="border rounded-lg px-20 py-5 bg-orange-500 text-white rounded-lg shadow hover:bg-blue-900 transition duration-300">Ventas</a></li>
-        <li><a href="/usuarios"className="border rounded-lg px-20 py-5 bg-orange-500 text-white rounded-lg shadow hover:bg-blue-900 transition duration-300">Usuarios</a></li>
-        <li><a href="/clientes"className="border rounded-lg px-20 py-5 bg-orange-500 text-white hover:bg-blue-900 transition duration-300">Clientes</a></li>
+    <nav  className=" bg-neutral p-20 border rounded-lg shadow px-10 ">
+      <ul className="flex flex-col">
+        {menuItems.map((item) => (
+          <li key={item.name}><br />
+            <a href={item.path} className="   text-neutral bg-primary bg-opacity-60 hover:bg-opacity-80 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded- focus:ring-gray-200 focus:border-primary block  p-3 py-4">
+              {item.name}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
   )

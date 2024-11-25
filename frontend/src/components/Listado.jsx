@@ -76,7 +76,7 @@ const Listado = (props) => {
           </button>
         </div>
       </div>
-      <table className="table-auto border border-black w-full text-center">
+      <table className="table-auto border border-black w-full text-center bg-primary">
         <thead>
           <tr>
             <td>Seleccionar</td>

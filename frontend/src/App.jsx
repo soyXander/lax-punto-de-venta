@@ -4,7 +4,7 @@ import Card from "./components/Card.jsx";
 function App() {
   return (
     <>
-      <section className="flex gap-x-4 p-4 justify-between">
+      <section className="flex gap-x-4 p-4 justify-between bg-ne">
         <Card
           titulo="Total de ventas"
           imgUrl="https://via.placeholder.com/50 "

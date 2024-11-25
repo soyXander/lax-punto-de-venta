@@ -1,13 +1,39 @@
+const menuItems = [{
+  name: "Inicio",
+  path: "/",
+},
+{
+  name: "POS",
+  path: "/pos",
+},
+{
+  name: "Productos",
+  path: "/productos",
+},
+{
+  name: "Ventas",
+  path: "/ventas",
+},
+{
+  name: "Usuarios",
+  path: "/usuarios",
+},
+{
+  name: "Clientes",
+  path: "/clientes",
+},]
+
 const Menu = () => {
   return (
-    <nav>
-      <ul>
-        <li><a href="/">Inicio</a></li>
-        <li><a href="/pos">POS</a></li>
-        <li><a href="/productos">Productos</a></li>
-        <li><a href="/ventas">Ventas</a></li>
-        <li><a href="/usuarios">Usuarios</a></li>
-        <li><a href="/clientes">Clientes</a></li>
+    <nav  className=" bg-neutral p-20 border rounded-lg shadow px-10 ">
+      <ul className="flex flex-col">
+        {menuItems.map((item) => (
+          <li key={item.name}><br />
+            <a href={item.path} className="   text-neutral bg-primary bg-opacity-60 hover:bg-opacity-80 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded- focus:ring-gray-200 focus:border-primary block  p-3 py-4">
+              {item.name}
+            </a>
+          </li>
+        ))}
       </ul>
     </nav>
   )

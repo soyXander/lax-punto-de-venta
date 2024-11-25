@@ -66,9 +66,9 @@ const POS = () => {
   ]
 
   return (
-    <div className="flex flex-col min-h-dvh">
+    <div className="flex flex-col min-h-dvh bg-primary">
       <header className="h-12 shrink-0">
-        <h1 className="text-3xl font-bold">POS</h1>
+        <h1 className="text-3xl font-bold text-white">POS</h1>
       </header>
       <main className="flex flex-row justify-center gap-x-3 flex-grow px-8">
         <div className="basis-3/4">

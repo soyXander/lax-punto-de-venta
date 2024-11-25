@@ -43,9 +43,37 @@ router.post("/", async (req, res) => {
 })
 
 // Actualizar cliente por ID
-// router.put("/:id", (req, res) => {})
+router.put("/:id", async (req, res) => {
+  try {
+    const client = await Client.findById(req.params.id)
+    if (!client) {
+      return res.status(404).json({ error: "Cliente no encontrado" })
+    }
+
+    const updateClint = await Client.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, updateAt: Date.now() },
+      { new: true }
+    )
+
+    res.json(updateClint)
+  } catch (error) {
+    res.status(500).json({ error: "Error al actualizar el cliente: " + error })
+  }
+})
 
 // Eliminar cliente por ID
-// router.delete("/:id", (req, res) => {})
+router.delete("/:id", async (req, res) => {
+  try {
+    const client = await Client.findById(req.params.id)
+    if (!client) {
+      return res.status(404).json({ error: "Cliente no encontrado" })
+    }
+    await Client.findByIdAndDelete(req.params.id)
+    res.json({ message: "Cliente eliminado con éxito" })
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar el cliente: " + error })
+  }
+})
 
 export default router

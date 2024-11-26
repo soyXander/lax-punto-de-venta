@@ -8,6 +8,7 @@ import clientRoutes from "./routes/clients.js"
 import userRoutes from "./routes/users.js"
 import initializeDB from "./utils/initializeDB.js"
 import productRoutes from "./routes/products.js"
+import saleRoutes from "./routes/sales.js"
 
 const app = express()
 const PORT = 3000
@@ -46,6 +47,9 @@ app.use("/api/productos", productRoutes)
 
 // Uso de enrutador de clientes
 app.use("/api/clientes", clientRoutes)
+
+//Uso de enrutador de ventas
+app.use("/api/sales", saleRoutes)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`)

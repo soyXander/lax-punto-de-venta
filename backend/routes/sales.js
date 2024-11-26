@@ -18,19 +18,16 @@ router.get("/", async (req, res) => {
 
 //crear lista de ventas
 router.post("/", async (req, res) => {
-  const { productId, quantity } = req.body
+  const { userId, clientId, total, paymentMethodId, products } = req.body
   try {
-    const id_product = await Product.findOne({ productId })
-    if (!id_product) {
-      return res.status(400).json({ error: "El producto no existe" })
-    }
-
     const sale = new Sale({
-      productId,
-      quantity
+      userId,
+      clientId,
+      total,
+      paymentMethodId,
+      products
     })
     await sale.save()
-
     res
       .status(201)
       .json({ message: "Lista de ventas fue creada con exito", sale })

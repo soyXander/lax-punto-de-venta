@@ -11,7 +11,7 @@ import "./index.css";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout nombre={<App />} />
+    element: <Layout component={<App />} />
   },
   {
     path: "/pos",
@@ -19,19 +19,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/productos",
-    element: <Layout nombre={<Listado titulo="Productos" />} />,
+    element: <Layout component={<Listado titulo="Productos" />} />,
   },
   {
     path: "/ventas",
-    element: <Layout nombre="Ventas" />,
+    element: <Layout component="Ventas" />,
   },
   {
     path: "/usuarios",
-    element: <Layout nombre="Usuarios" />,
+    element: <Layout component="Usuarios" />,
   },
   {
     path: "/clientes",
-    element: <Layout nombre="Clientes" />,
+    element: <Layout component="Clientes" />,
   },
   {
     path: "/login",

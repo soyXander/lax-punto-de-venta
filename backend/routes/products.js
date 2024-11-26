@@ -16,14 +16,14 @@ router.get("/", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  const { name, description, barcode, category_id, price, stock } = req.body
+  const { name, description, barcode, categoryId, price, stock } = req.body
 
   try {
     const product = new Product({
       name,
       description,
       barcode,
-      category_id,
+      categoryId,
       price,
       stock
     })

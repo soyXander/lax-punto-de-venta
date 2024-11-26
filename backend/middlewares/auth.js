@@ -7,7 +7,7 @@ export const validateToken = passport.authenticate("jwt", { session: false })
 export const validateRole = (role) => {
   return async (req, res, next) => {
     const user = req.user
-    const userRole = await Role.findById(user.role_id)
+    const userRole = await Role.findById(user.roleId)
 
     if (userRole.name !== role) {
       return res.status(403).json({ error: "No tienes permiso para realizar esta acción" })

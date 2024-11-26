@@ -46,11 +46,11 @@ router.post("/", async (req, res) => {
       username,
       password: hashedPassword,
       email,
-      role_id: role._id
+      roleId: role._id
     })
     await user.save()
     const token = jwt.sign(
-      { id: user._id, role: user.role_id },
+      { id: user._id, role: user.roleId },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     )

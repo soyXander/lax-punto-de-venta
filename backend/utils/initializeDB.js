@@ -26,7 +26,7 @@ const initializeDB = async () => {
         username: "admin",
         password: hashedPassword,
         email: "admin@email.com",
-        role_id: await Role.findOne({ name: "admin" })
+        roleId: await Role.findOne({ name: "admin" })
       })
       await admin.save()
       console.log("Usuario Administrador creado")

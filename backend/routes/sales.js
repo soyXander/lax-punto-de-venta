@@ -18,15 +18,15 @@ router.get("/", async (req, res) => {
 
 //crear lista de ventas
 router.post("/", async (req, res) => {
-  const { product_id, quantity } = req.body
+  const { productId, quantity } = req.body
   try {
-    const id_product = await Product.findOne({ product_id })
+    const id_product = await Product.findOne({ productId })
     if (!id_product) {
       return res.status(400).json({ error: "El producto no existe" })
     }
 
     const sale = new Sale({
-      product_id,
+      productId,
       quantity
     })
     await sale.save()

@@ -39,4 +39,25 @@ router.post("/", async (req, res) => {
   }
 })
 
+//Actualizar lista de ventas
+router.put("/:id", async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id)
+    if (!sale) {
+      return res.status(404).json({ error: "Lista no encontrada" })
+    }
+
+    const updateSale = await Sale.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, updateAt: Date.now() },
+      { new: true }
+    )
+    res.json(updateSale)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al actualizar la lista de ventas" + error })
+  }
+})
+
 export default router

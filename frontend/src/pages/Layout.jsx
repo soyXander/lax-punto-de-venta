@@ -1,18 +1,20 @@
 import Menu from '../components/Menu'
+import Logo from "../components/Logo"
 
 const Layout = (props) => {
 
   return (
-    <div className='min-h-dvh w-full flex bg-red-300'>
-      <div className='bg-green-300 w-1/6'>
+    <div className='min-h-dvh w-full flex'>
+      <div className='w-1/6'>
+        <Logo />
         <Menu />
       </div>
-      <div className='bg-neutral w-full'>
-        <header className='bg-base'>
+      <div className='w-full bg-gray-100'>
+        <header>
           <h1>Header</h1>
         </header>
         <main>
-          {props.nombre}
+          {props.component}
         </main>
       </div>
     </div>

@@ -1,6 +1,6 @@
-const Menu = (props) => {
+const Card = (props) => {
   return (
-    <div className=" flex-4 border border- rounded-lg  bg-primary bg-opacity-60 hover:bg-opacity-80  hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded- focus:ring-gray-200 focus:border-green-200 block  p-3 text-align-left tex ">
+    <div className="flex flex-col rounded-lg bg-primary bg-opacity-70 hover:bg-opacity-100 max-w-44 p-3 text-align-left">
       <div>
         <img
           src={props.imgUrl}
@@ -15,4 +15,4 @@ const Menu = (props) => {
   )
 }
 
-export default Menu
+export default Card

@@ -60,25 +60,27 @@ const Listado = (props) => {
   return (
     <>
       <h2>{props.titulo}</h2>
-      <div className="flex justify-between">
-        <div>
-          <button className="border bg-green-500 text-white px-3 py-1 rounded-xl">
+      <div className="flex justify-between items-center">
+        <div className="py-2 px-1">
+          <button className="border bg-primary bg-opacity-70 hover:bg-opacity-100 transition-colors duration-300 text-white px-3 py-1 rounded-xl">
             Agregar
           </button>
-          <button className="border bg-red-500 text-white px-3 py-1 rounded-xl">
+          <button className="border bg-secondary bg-opacity-70 hover:bg-opacity-100 transition-colors duration-300 text-white px-3 py-1 rounded-xl">
             Eliminar
           </button>
         </div>
-        <div>
-          <input type="text" />
-          <button className="border bg-blue-500 text-white px-3 py-1 rounded-xl">
+        <div className="flex">
+        <input type="text" placeholder="Buscar producto..."
+                className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 hover:border-primary focus:border-primary focus:outline-none"
+              />
+          <button className="border bg-primary bg-opacity-70 hover:bg-opacity-100 transition-colors duration-300 text-white px-3 py-1 rounded-xl">
             Buscar
           </button>
         </div>
       </div>
-      <table className="table-auto border border-black w-full text-center bg-primary">
+      <table className="table-auto border border-black w-full text-center">
         <thead>
-          <tr>
+          <tr className="border-2 border-gray-200">
             <td>Seleccionar</td>
             <td>Producto</td>
             <td>Descripcion</td>
@@ -93,7 +95,7 @@ const Listado = (props) => {
         </thead>
         <tbody>
           {productos.map((producto) => (
-            <tr key={producto.id}>
+            <tr key={producto.id} className="border-2 border-gray-100">
               <td>
                 <input type="checkbox" />
               </td>

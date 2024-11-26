@@ -60,4 +60,20 @@ router.put("/:id", async (req, res) => {
   }
 })
 
+//Eliminar lista de ventas
+router.delete("/:id", async (req, res) => {
+  try {
+    const sale = await Sale.findById(req.params.id)
+    if (!sale) {
+      return res.status(404).json({ error: "Lista de ventas no encontrado" })
+    }
+    await Sale.findByIdAndDelete(req.params.id)
+    res.json({ message: "Lista de ventas eliminada con éxito" })
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al eliminar la lista de ventas: " + error })
+  }
+})
+
 export default router

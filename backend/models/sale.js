@@ -7,7 +7,10 @@ const salesSchema = new mongoose.Schema({
         ref: "Product",
         require: true
       },
-      quantity: { type: String, require: true }
+      quantity: {
+        type: Number,
+        require: true
+      }
     }
   ]
 })

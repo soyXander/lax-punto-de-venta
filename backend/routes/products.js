@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
 
 router.put("/:id", async (req, res) => {
   try {
-    const producto = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id)
     if (!product) {
       return res.status(404).json({ error: "producto no encontrado" })
     }
@@ -52,6 +52,20 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: "error al actualizar el producto: " + error })
+  }
+})
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id)
+    if (!product) {
+      return res.status(404).json({ error: "producto no encontrado" })
+    }
+    await Product.findByIdAndDelete(req.params.id)
+    res.json({ message: "producto eliminado con exito" })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "error al eliminar: " + error })
   }
 })
 

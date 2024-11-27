@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import Menu from "../components/Menu"
 import Header from "../components/Header"
 
@@ -15,6 +16,10 @@ const Layout = (props) => {
       </div>
     </>
   )
+}
+
+Layout.propTypes = {
+  component: PropTypes.element.isRequired,
 }
 
 export default Layout

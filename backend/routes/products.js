@@ -1,29 +1,31 @@
 import express from "express"
 import Product from "../models/product.js"
+import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", async (req, res) => {
-  try {
-    const products = await Product.find()
-    res.json(products)
-  } catch (error) {
-    console.error(error)
-    res
-      .status(500)
-      .json({ error: "error al obtener los productos: " + error.message })
+router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+    try {
+      const products = await Product.find()
+      res.json(products)
+    } catch (error) {
+      console.error(error)
+      res
+        .status(500)
+        .json({ error: "error al obtener los productos: " + error.message })
+    }
   }
-})
+)
 
-router.post("/", async (req, res) => {
-  const { name, description, barcode, category_id, price, stock } = req.body
+router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
+  const { name, description, barcode, categoryId, price, stock } = req.body
 
   try {
     const product = new Product({
       name,
       description,
       barcode,
-      category_id,
+      categoryId,
       price,
       stock
     })
@@ -37,7 +39,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
     if (!product) {
@@ -55,7 +57,7 @@ router.put("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
     if (!product) {

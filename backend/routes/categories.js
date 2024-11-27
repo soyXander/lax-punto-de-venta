@@ -1,9 +1,10 @@
 import express from "express"
 import Category from "../models/category.js"
+import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", async (req, res) => {
+router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
   try {
     const categories = await Category.find()
     res.json(categories)
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.get("/:id/productos", async (req, res) => {
+router.get("/:id/productos", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).populate("products")
     if (!category) {
@@ -32,7 +33,7 @@ router.get("/:id/productos", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
   const { name } = req.body
 
   try {
@@ -45,7 +46,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const category = await Category.findById(req.params.id)
     if (!category) {
@@ -65,7 +66,7 @@ router.put("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const category = await Category.findById(req.params.id)
     if (!category) {

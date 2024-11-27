@@ -1,47 +1,57 @@
 import express from "express"
 import Sale from "../models/sale.js"
-import Product from "../models/product.js"
+import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-//Obtener lista de ventas
-router.get("/", async (req, res) => {
-  try {
-    const sales = await Sale.find()
-    res.json(sales)
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "La lista de ventas no se encuentra" + error.message })
+// Obtener ventas
+router.get(
+  "/",
+  validateToken,
+  validateRole(["admin", "cashier"]),
+  async (req, res) => {
+    try {
+      const sales = await Sale.find()
+      res.json(sales)
+    } catch (error) {
+      res
+        .status(500)
+        .json({ error: "Error al obtener las ventas" + error.message })
+    }
   }
-})
+)
 
-//crear lista de ventas
-router.post("/", async (req, res) => {
-  const { userId, clientId, total, paymentMethodId, products } = req.body
-  try {
-    const sale = new Sale({
-      userId,
-      clientId,
-      total,
-      paymentMethodId,
-      products
-    })
-    await sale.save()
-    res
-      .status(201)
-      .json({ message: "Lista de ventas fue creada con exito", sale })
-  } catch (error) {
-    res.status(201).json({ error: "Error al crear la lista" })
+// crear ventas
+router.post(
+  "/",
+  validateToken,
+  validateRole(["admin", "cashier"]),
+  async (req, res) => {
+    const { userId, clientId, total, paymentMethodId, products } = req.body
+    try {
+      const sale = new Sale({
+        userId,
+        clientId,
+        total,
+        paymentMethodId,
+        products
+      })
+      await sale.save()
+      res
+        .status(201)
+        .json({ message: "Venta creada con exito", sale })
+    } catch (error) {
+      res.status(201).json({ error: "Error al crear la venta" })
+    }
   }
-})
+)
 
-//Actualizar lista de ventas
-router.put("/:id", async (req, res) => {
+// Actualizar ventas
+router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const sale = await Sale.findById(req.params.id)
     if (!sale) {
-      return res.status(404).json({ error: "Lista no encontrada" })
+      return res.status(404).json({ error: "Venta no encontrada" })
     }
 
     const updateSale = await Sale.findByIdAndUpdate(
@@ -53,23 +63,23 @@ router.put("/:id", async (req, res) => {
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error al actualizar la lista de ventas" + error })
+      .json({ error: "Error al actualizar la venta: " + error })
   }
 })
 
-//Eliminar lista de ventas
-router.delete("/:id", async (req, res) => {
+// Eliminar ventas
+router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const sale = await Sale.findById(req.params.id)
     if (!sale) {
-      return res.status(404).json({ error: "Lista de ventas no encontrado" })
+      return res.status(404).json({ error: "Venta no encontrada" })
     }
     await Sale.findByIdAndDelete(req.params.id)
-    res.json({ message: "Lista de ventas eliminada con éxito" })
+    res.json({ message: "Venta eliminada con éxito" })
   } catch (error) {
     res
       .status(500)
-      .json({ error: "Error al eliminar la lista de ventas: " + error })
+      .json({ error: "Error al eliminar la venta: " + error })
   }
 })
 

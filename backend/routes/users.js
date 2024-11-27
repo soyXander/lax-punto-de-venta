@@ -3,11 +3,12 @@ import express from "express"
 import jwt from "jsonwebtoken"
 import User from "../models/user.js"
 import Role from "../models/role.js"
+import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-//Obtenemos todos los usuarios
-router.get("/", async (req, res) => {
+// Obtenemos todos los usuarios
+router.get("/", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const users = await User.find()
     res.json(users)
@@ -19,8 +20,8 @@ router.get("/", async (req, res) => {
   }
 })
 
-//Crear usuario nuevo
-router.post("/", async (req, res) => {
+// Crear usuario nuevo
+router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
   const {
     name,
     lastName,
@@ -65,7 +66,7 @@ router.post("/", async (req, res) => {
 })
 
 // Actualizar usuario por Id
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
@@ -84,7 +85,7 @@ router.put("/:id", async (req, res) => {
 })
 
 // Eliminar un usuario por Id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {

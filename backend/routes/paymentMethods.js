@@ -1,9 +1,10 @@
 import express from "express"
 import PaymentMethod from "../models/paymentMethod.js"
+import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", async (req, res) => {
+router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
   try {
     const paymentMethods = await PaymentMethod.find()
     res.json(paymentMethods)
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
   const { name } = req.body
 
   try {
@@ -30,7 +31,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const paymentMethod = await PaymentMethod.findById(req.params.id)
     if (!paymentMethod) {
@@ -50,7 +51,7 @@ router.put("/:id", async (req, res) => {
   }
 })
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   try {
     const paymentMethod = await PaymentMethod.findById(req.params.id)
     if (!paymentMethod) {

@@ -1,3 +1,5 @@
+import { logout } from "../services/auth"
+
 const menuItems = [
   {
     name: "Inicio",
@@ -26,12 +28,6 @@ const menuItems = [
 ]
 
 const Menu = () => {
-
-  const cerrarSesion = () => {
-    localStorage.removeItem("token")
-    window.location.href = "/login"
-  }
-
   return (
     <nav className="flex h-[calc(100vh-4rem)] flex-col justify-between">
       <ul className="min-h mx-2 my-4 flex flex-col gap-4">
@@ -50,7 +46,7 @@ const Menu = () => {
       <div className="mx-2 my-4 flex flex-col">
         <a
           className="w-full cursor-pointer rounded-3xl bg-secondary bg-opacity-60 px-4 py-2 text-white transition-colors duration-300 hover:bg-opacity-100"
-          onClick={cerrarSesion}
+          onClick={logout}
         >
           Cerrar sesión
         </a>

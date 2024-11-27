@@ -2,7 +2,7 @@ const API_URL = "http://localhost:3000/api/auth/"
 
 export const login = async (username, password) => {
   try {
-    const response = await fetch(API_URL + "login", {
+    const res = await fetch(API_URL + "login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -10,11 +10,16 @@ export const login = async (username, password) => {
       body: JSON.stringify({ username, password })
     })
 
-    if (response.ok) {
-      const data = await response.json()
+    if (res.ok) {
+      const data = await res.json()
       return data
     }
   } catch (error) {
     console.error(error)
   }
+}
+
+export const logout = () => {
+  localStorage.removeItem("token")
+  window.location.href = "/login"
 }

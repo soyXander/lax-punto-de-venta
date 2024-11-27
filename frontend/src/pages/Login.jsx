@@ -1,26 +1,46 @@
+import { useState } from "react"
+import { login } from "../services/auth"
+
 const Login = () => {
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+  const [error, setError] = useState("")
+
+  const handleLogin = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await login(username, password)
+      localStorage.setItem("token", res.token)
+      window.location.href = "/"
+    } catch (error) {
+      setError(error.message)
+    }
+  }
   return (
-    <div className=" min-h-full flex mx-auto justify-center items-center bg-neutral ">
-      <form className="text gray-500 bg-primary text-cyan-500 flex flex-col m-20 p-10  border rounded-lg">
-        <label className="font-bold text-center text-secundary text-2lg">Nombre de Usuario</label>
+    <div className="flex h-full items-center justify-center bg-base">
+      <form className="text gray-500 m-20 flex flex-col gap-y-6 rounded-lg border bg-secondary bg-opacity-70 p-10 text-neutral">
         <input
-          className="text-secundary text-center borde bg-base border rounded-lg  hover:bg-neutral hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded- focus:ring-secundary focus:border-blue-500 block  p-1"
+          className="rounded-lg bg-base py-1 text-center text-neutral outline-none"
           type="text"
-          placeholder="soyusuario1234"
+          placeholder="Nombre de usuario"
+          onChange={(e) => setUsername(e.target.value)}
         />
 
-        <label className=" font-bold text-secundary">Contraseña</label>
         <input
-          className="text-center text-secundary  bg-base  border rounded-lg  hover:bg-neutral hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded- focus:ring-secundary focus:border-gray-500 block  p-1"
+          className="rounded-lg bg-base py-1 text-center text-neutral outline-none"
           type="password"
-          placeholder="*********"
+          placeholder="Contraseña"
+          onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="font-bold px-9 text-secundary bg-base border rounded-lg  mt-20  hover:bg-neutral hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:rounded- focus:ring-secundary focus:border-blue-500 block  p-1">
+        <button
+          className="h-full rounded-lg border bg-primary bg-opacity-30 px-8 py-1 font-semibold uppercase text-white shadow-md shadow-transparent transition-all duration-300 hover:bg-opacity-100 hover:shadow hover:shadow-black"
+          onClick={handleLogin}
+        >
           Iniciar sesion
         </button>
       </form>
     </div>
-  );
-};
-export default Login;
+  )
+}
+export default Login

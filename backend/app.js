@@ -2,13 +2,15 @@ import cors from "cors"
 import express from "express"
 import authConfig from "./config/auth.js"
 import connectDB from "./config/db.js"
-import { validateRole, validateToken } from "./middlewares/auth.js"
 import authRoutes from "./routes/auth.js"
+import categoryRoutes from "./routes/categories.js"
 import clientRoutes from "./routes/clients.js"
+import paymentMethodRoutes from "./routes/paymentMethods.js"
+import productRoutes from "./routes/products.js"
+import roleRoutes from "./routes/roles.js"
+import saleRoutes from "./routes/sales.js"
 import userRoutes from "./routes/users.js"
 import initializeDB from "./utils/initializeDB.js"
-import productRoutes from "./routes/products.js"
-import saleRoutes from "./routes/sales.js"
 
 const app = express()
 const PORT = 3000
@@ -29,27 +31,26 @@ app.get("/", (req, res) => {
 // Uso de enrutador de autenticación
 app.use("/api/auth", authRoutes)
 
-// Ruta protegida de prueba
-app.get("/admin", validateToken, validateRole("admin"), (req, res) => {
-  try {
-    res.json({ message: "Acceso permitido" })
-  } catch (error) {
-    console.error(error)
-    res.status(500).json({ error: "Error al acceder a la ruta: " + error })
-  }
-})
+// Uso de enrutador de Usuario
+app.use("/api/usuario", userRoutes)
 
-//Uso de enrutador de Usuario
-app.use("/api/usuarios", userRoutes)
+// Uso de enrutador de Rol
+app.use("/api/rol", roleRoutes)
 
 // Uso del enrutador de Productos
-app.use("/api/productos", productRoutes)
+app.use("/api/producto", productRoutes)
+
+// Uso de enrutador de categorias
+app.use("/api/categoria", categoryRoutes)
 
 // Uso de enrutador de clientes
-app.use("/api/clientes", clientRoutes)
+app.use("/api/cliente", clientRoutes)
 
 //Uso de enrutador de ventas
-app.use("/api/sales", saleRoutes)
+app.use("/api/venta", saleRoutes)
+
+//Uso de enrutador de metodos de pago
+app.use("/api/metodo-pago", paymentMethodRoutes)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`)

@@ -1,4 +1,3 @@
-import "./POS.css"
 
 const POS = () => {
   const productos = [
@@ -100,43 +99,43 @@ const POS = () => {
                 type="text"
                 placeholder="Buscar producto..."
                 className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 hover:border-primary focus:border-primary focus:outline-none"
-              />
+                              />
               <a href="">🔎</a>
             </div>
           </div>
           <div className="flex h-[calc(100vh-13rem)] flex-wrap justify-evenly gap-y-3 overflow-y-scroll bg-gray-200 py-3">
             {productos.map((producto, index) => (
-              <article
-                className="flex max-w-[320px] flex-col items-center justify-center rounded-lg border-4 border-transparent bg-secondary bg-opacity-50 p-3 text-neutral shadow-md duration-500 hover:border-primary hover:shadow-2xl"
-                key={index}
-              >
-                <img
-                  className="mb-3 rounded-lg"
-                  src="https://www.shutterstock.com/shutterstock/photos/2232098881/display_1500/stock-photo-different-fresh-vegetables-for-eating-healthy-fresh-vegetables-in-basket-isolated-on-white-2232098881.jpg"
-                  alt=""
-                />
-                <div className="flex w-full flex-col items-start justify-start">
-                  <h2 className="font-bold">{producto.nombre}</h2>
-                  <p>
-                    ${producto.precio.toFixed(2)}{" "}
-                    <span className="text-xs font-bold text-accent">
-                      Stock: {producto.cantidad}
-                    </span>
-                  </p>
-                </div>
-              </article>
-            ))}
+                <article
+                  className="flex max-w-[320px] flex-col items-center justify-center rounded-lg border-4 border-transparent bg-secondary bg-opacity-50 p-3 text-neutral shadow-md duration-500 hover:border-primary hover:shadow-2xl"
+                  key={index}
+                                  >
+                  <img
+                    className="mb-3 rounded-lg"
+                    src="https://www.shutterstock.com/shutterstock/photos/2232098881/display_1500/stock-photo-different-fresh-vegetables-for-eating-healthy-fresh-vegetables-in-basket-isolated-on-white-2232098881.jpg"
+                    alt=""
+                  />
+                  <div className="flex w-full flex-col items-start justify-start">
+                    <h2 className="font-bold">{producto.nombre}</h2>
+                    <p>
+                      ${producto.precio.toFixed(2)}{" "}
+                      <span className="text-xs font-bold text-accent">
+                        Stock: {producto.cantidad}
+                      </span>
+                    </p>
+                  </div>
+                </article>
+              ))}
           </div>
 
           <div className="flex h-12">
             {categorias.map((categoria, index) => (
-              <button
-                className="m-1 flex basis-1/5 flex-col items-center justify-center rounded-lg border bg-primary bg-opacity-70 p-3 font-semibold text-neutral shadow-md shadow-transparent duration-300 hover:bg-opacity-100 hover:shadow-gray-500"
-                key={index}
-              >
-                {categoria.nombre}
-              </button>
-            ))}
+                <button
+                  className="m-1 flex basis-1/5 flex-col items-center justify-center rounded-lg border bg-primary bg-opacity-70 p-3 font-semibold text-neutral shadow-md shadow-transparent duration-300 hover:bg-opacity-100 hover:shadow-gray-500"
+                  key={index}
+                >
+                  {categoria.nombre}
+                </button>
+              ))}
           </div>
         </div>
         <div className="flex flex-grow basis-1/4 flex-col justify-between rounded-lg bg-white shadow">
@@ -152,23 +151,23 @@ const POS = () => {
               </thead>
               <tbody className="max-h-[calc(100vh-13rem)] overflow-y-scroll">
                 {productos.map((producto, index) => (
-                  <tr
-                    key={index}
-                    className="border border-gray-200 text-neutral"
-                  >
-                    <td>{producto.nombre}</td>
-                    <td>
+                    <tr
+                      key={index}
+                      className="border border-gray-200 text-neutral"
+                    >
+                      <td>{producto.nombre}</td>
+                      <td>
                       <button className="mx-2 h-6 w-6 rounded-full bg-primary font-bold text-neutral opacity-70 hover:opacity-100">
-                        -
-                      </button>
-                      {producto.cantidad}
+                          -
+                        </button>
+                        {producto.cantidad}
                       <button className="mx-2 h-6 w-6 rounded-full bg-primary font-bold text-neutral opacity-70 hover:opacity-100">
-                        +
-                      </button>
-                    </td>
-                    <td>${producto.precio.toFixed(2)}</td>
-                  </tr>
-                ))}
+                          +
+                        </button>
+                      </td>
+                      <td>${producto.precio.toFixed(2)}</td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -181,7 +180,7 @@ const POS = () => {
                   className="w-20 text-right"
                   type="number"
                   placeholder="0.00"
-                ></input>
+                                  ></input>
               </span>
             </li>
             <li className="flex justify-between">

@@ -123,7 +123,7 @@ const ProductFormModal = ({
               setFormData({ ...formData, categoryId: e.target.value })
             }
             className="placeholder:text-neutral w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 focus:border-primary"
-            
+            required
           >
             <option value="">Seleccione una categoría</option>
             {categories.map((category) => (

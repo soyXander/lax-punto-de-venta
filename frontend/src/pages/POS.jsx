@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { getAllProducts } from "../services/Product"
 import { getAllCategories } from "../services/Category"
 import { createSale } from "../services/Sale"
+import { getAllClients } from "../services/Client"
 import { useAuth } from "../contexts/AuthContext"
 
 const POS = () => {
@@ -11,6 +12,8 @@ const POS = () => {
   const [filteredProducts, setFilteredProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [sales, setSales] = useState([])
+  const [clients, setClients] = useState([])
+  const [selectedClient, setSelectedClient] = useState(null)
   const [search, setSearch] = useState("")
   const [subtotal, setSubtotal] = useState(0)
   const [total, setTotal] = useState(0)
@@ -22,8 +25,10 @@ const POS = () => {
         try {
           const products = await getAllProducts(session.token)
           const categories = await getAllCategories(session.token)
+          const clients = await getAllClients(session.token)
           setProducts(products)
           setCategories(categories)
+          setClients(clients)
         } catch (error) {
           console.error("Error al obtener los productos:", error)
         }
@@ -39,8 +44,7 @@ const POS = () => {
     setTotal(subtotal - subtotal * (discount / 100))
   }, [sales, discount])
 
-  const handleAddProduct = () => {
-  }
+  const handleAddProduct = () => {}
 
   const handleProductToCart = (product) => {
     const existingProduct = sales.find(
@@ -85,16 +89,42 @@ const POS = () => {
     )
   }
 
-  const handleFinishSale = () => {
+  const handleSelectClient = (client) => {
+    setSelectedClient(client)
   }
+
+  const handleFinishSale = () => {}
 
   const cancelSale = () => {
     setSales([])
   }
 
-  const finishSale = () => {
-    console.log("Venta finalizada", sales)
-    setSales([])
+  const finishSale = async () => {
+    if (!selectedClient) {
+      alert("Seleccione un cliente antes de finalizar la venta.")
+      return
+    }
+
+    const saleData = {
+      client: selectedClient._id,
+      items: sales.map((item) => ({
+        product: item.product._id,
+        quantity: item.quantity
+      })),
+      total,
+      discount
+    }
+
+    try {
+      const newSale = await createSale(saleData, session.token)
+      console.log("Venta creada:", newSale)
+      setSales([])
+      setSelectedClient(null)
+      alert("Venta finalizada con éxito.")
+    } catch (error) {
+      console.error("Error al finalizar la venta:", error)
+      alert("Hubo un error al procesar la venta.")
+    }
   }
 
   return (
@@ -153,11 +183,11 @@ const POS = () => {
                     alt="Producto"
                   />
                   <div className="flex w-full flex-col items-start justify-start">
-                    <h2 className="font-bold">{product.nombre}</h2>
+                    <h2 className="font-bold">{product.name}</h2>
                     <p>
-                      ${product.precio}{" "}
+                      ${product.price}{" "}
                       <span className="text-xs font-bold text-accent">
-                        Stock: {product.cantidad}
+                        Stock: {product.stock}
                       </span>
                     </p>
                   </div>
@@ -172,7 +202,7 @@ const POS = () => {
                   className="m-1 flex basis-1/5 flex-col items-center justify-center rounded-lg border bg-primary bg-opacity-70 p-3 font-semibold text-neutral shadow-md shadow-transparent duration-300 hover:bg-opacity-100 hover:shadow-gray-500"
                   key={category._id}
                 >
-                  {category.nombre}
+                  {category.name}
                 </button>
               ))}
           </div>
@@ -195,7 +225,7 @@ const POS = () => {
                       key={item._id}
                       className="border border-gray-200 text-neutral"
                     >
-                      <td className="text-left pl-2">
+                      <td className="pl-2 text-left">
                         <span
                           className="cursor-pointer"
                           onClick={() => handleRemoveProduct(item.product)}
@@ -206,7 +236,7 @@ const POS = () => {
                       </td>
                       <td>
                         <button
-                          className="mx-2 h-6 w-6 rounded-full bg-primary font-bold text-neutral opacity-70 hover:opacity-100"
+                          className="mx-2 h-6 w-6 rounded-full bg-secondary font-bold text-white opacity-70 hover:opacity-100"
                           onClick={() =>
                             handleUpdateQuantity(
                               item.product,
@@ -218,7 +248,7 @@ const POS = () => {
                         </button>
                         {item.quantity}
                         <button
-                          className="mx-2 h-6 w-6 rounded-full bg-primary font-bold text-neutral opacity-70 hover:opacity-100"
+                          className="mx-2 h-6 w-6 rounded-full bg-secondary font-bold text-white opacity-70 hover:opacity-100"
                           onClick={() =>
                             handleUpdateQuantity(
                               item.product,
@@ -235,7 +265,29 @@ const POS = () => {
               </tbody>
             </table>
           </div>
+
           <ul className="border-gray-200 bg-gray-200 p-4 text-neutral">
+            <li className="flex justify-between">
+              <label className="mb-2">Cliente:</label>
+              <select
+                className="rounded-md border p-2"
+                value={selectedClient ? selectedClient._id : ""}
+                onChange={(e) =>
+                  handleSelectClient(
+                    clients.find((c) => c._id === e.target.value)
+                  )
+                }
+              >
+                <option value="" disabled>
+                  Seleccione un cliente
+                </option>
+                {clients.map((client) => (
+                  <option key={client._id} value={client._id}>
+                    {client.lastname}, {client.name}
+                  </option>
+                ))}
+              </select>
+            </li>
             <li className="flex justify-between">
               <span>Descuento:</span>
               <span>

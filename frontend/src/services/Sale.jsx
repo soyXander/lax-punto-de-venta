@@ -32,13 +32,13 @@ export const getSaleById = async (id) => {
   }
 }
 
-export const createSale = async (sale) => {
+export const createSale = async (sale, token) => {
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(sale)
     })
@@ -51,13 +51,13 @@ export const createSale = async (sale) => {
   }
 }
 
-export const updateSale = async (id, sale) => {
+export const updateSale = async (id, sale, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(sale)
     })
@@ -70,12 +70,12 @@ export const updateSale = async (id, sale) => {
   }
 }
 
-export const deleteSale = async (id) => {
+export const deleteSale = async (id, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       }
     })
     if (res.ok) {

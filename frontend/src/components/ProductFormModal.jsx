@@ -18,7 +18,7 @@ const ProductFormModal = ({
 
   // Cargar los datos del producto cuando el modal se abre para editar
   useEffect(() => {
-    if (product) {
+    if (product && isOpen) {
       setFormData({
         name: product.name || "",
         description: product.description || "",
@@ -26,8 +26,8 @@ const ProductFormModal = ({
         categoryId: product.categoryId || "",
         price: product.price || "",
         stock: product.stock || "",
-      })
-    } else {
+      });
+    } else if (isOpen) {
       setFormData({
         name: "",
         description: "",
@@ -35,9 +35,21 @@ const ProductFormModal = ({
         categoryId: "",
         price: "",
         stock: "",
-      })
+      });
     }
-  }, [product])
+  }, [product, isOpen]);
+
+  const handleClose = () => {
+    setFormData({
+      name: "",
+      description: "",
+      barcode: "",
+      categoryId: "",
+      price: "",
+      stock: "",
+    })
+    onClose()
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -51,7 +63,7 @@ const ProductFormModal = ({
       <div className="modal-box">
         <button
           className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-          onClick={onClose}
+          onClick={handleClose}
         >
           ✕
         </button>
@@ -121,7 +133,7 @@ const ProductFormModal = ({
             ))}
           </select>
           <div className="modal-action">
-            <button className="btn" onClick={onClose}>
+            <button className="btn" onClick={handleClose}>
               Cancelar
             </button>
             <button className="btn btn-primary" type="submit">

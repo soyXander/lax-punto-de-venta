@@ -15,7 +15,7 @@ const CategoryFormModal = ({
 
   // Cargar los datos de la categoría cuando el modal se abre para editar
   useEffect(() => {
-    if (category) {
+    if (category && isOpen) {
       setFormData({
         name: category.name || "",
         description: category.description || "",
@@ -28,7 +28,16 @@ const CategoryFormModal = ({
         parent: ""
       })
     }
-  }, [category])
+  }, [category, isOpen])
+
+  const handleClose = () => {
+    onClose()
+    setFormData({
+      name: "",
+      description: "",
+      parent: ""
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -47,7 +56,7 @@ const CategoryFormModal = ({
       <div className="modal-box">
         <button
           className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-          onClick={onClose}
+          onClick={handleClose}
         >
           ✕
         </button>
@@ -86,7 +95,7 @@ const CategoryFormModal = ({
             ))}
           </select>
           <div className="modal-action">
-            <button className="btn" onClick={onClose}>
+            <button className="btn" onClick={handleClose}>
               Cancelar
             </button>
             <button className="btn btn-primary" type="submit">

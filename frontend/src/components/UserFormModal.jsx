@@ -11,7 +11,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, user }) => {
   })
 
   useEffect(() => {
-    if (user) {
+    if (user && isOpen) {
       setFormData({
         name: user.name || "",
         lastName: user.lastName || "",
@@ -20,7 +20,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, user }) => {
         password: "",
         roleId: user.roleId || ""
       })
-    } else {
+    } else if (isOpen) {
       setFormData({
         name: "",
         lastName: "",
@@ -30,7 +30,19 @@ const UserFormModal = ({ isOpen, onClose, onSave, user }) => {
         roleId: ""
       })
     }
-  }, [user])
+  }, [user, isOpen])
+
+  const handleClose = () => {
+    onClose()
+    setFormData({
+      name: "",
+      lastName: "",
+      username: "",
+      email: "",
+      password: "",
+      roleId: ""
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -44,7 +56,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, user }) => {
       <div className="modal-box">
         <button
           className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-          onClick={onClose}
+          onClick={handleClose}
         >
           ✕
         </button>
@@ -111,7 +123,7 @@ const UserFormModal = ({ isOpen, onClose, onSave, user }) => {
             required
           />
           <div className="modal-action">
-            <button className="btn" onClick={onClose}>
+            <button className="btn" onClick={handleClose}>
               Cancelar
             </button>
             <button className="btn btn-primary" type="submit">

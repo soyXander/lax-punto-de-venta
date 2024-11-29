@@ -9,14 +9,14 @@ const ClientFormModal = ({ isOpen, onClose, onSave, client }) => {
   })
 
   useEffect(() => {
-    if (client) {
+    if (client && isOpen) {
       setFormData({
         name: client.name || "",
         lastname: client.lastname || "",
         email: client.email || "",
         phone: client.phone || ""
       })
-    } else {
+    } else if (isOpen) {
       setFormData({
         name: "",
         lastname: "",
@@ -24,7 +24,17 @@ const ClientFormModal = ({ isOpen, onClose, onSave, client }) => {
         phone: ""
       })
     }
-  }, [client])
+  }, [client, isOpen])
+
+  const handleClose = () => {
+    onClose()
+    setFormData({
+      name: "",
+      lastname: "",
+      email: "",
+      phone: ""
+    })
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -38,7 +48,7 @@ const ClientFormModal = ({ isOpen, onClose, onSave, client }) => {
       <div className="modal-box">
         <button
           className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-          onClick={onClose}
+          onClick={handleClose}
         >
           ✕
         </button>
@@ -85,7 +95,7 @@ const ClientFormModal = ({ isOpen, onClose, onSave, client }) => {
             required
           />
           <div className="modal-action">
-            <button className="btn" onClick={onClose}>
+            <button className="btn" onClick={handleClose}>
               Cancelar
             </button>
             <button className="btn btn-primary" type="submit">

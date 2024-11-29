@@ -1,21 +1,17 @@
 import { useState } from "react"
-import { login } from "../services/auth"
+import { useAuth } from "../contexts/AuthContext"
 
 const Login = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
+
+  const { login } = useAuth()
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    try {
-      const res = await login(username, password)
-      localStorage.setItem("token", res.token)
-      window.location.href = "/"
-    } catch (error) {
-      setError(error.message)
-    }
+    login(username, password)
   }
+
   return (
     <div className="flex h-full items-center justify-center bg-base">
       <form className="text gray-500 m-20 flex flex-col gap-y-6 rounded-lg border bg-secondary bg-opacity-70 p-10 text-neutral">

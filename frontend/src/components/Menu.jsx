@@ -1,4 +1,4 @@
-import { logout } from "../services/auth"
+import { useAuth } from "../contexts/AuthContext.jsx"
 
 const menuItems = [
   {
@@ -28,6 +28,8 @@ const menuItems = [
 ]
 
 const Menu = () => {
+  const { logout } = useAuth()
+
   return (
     <nav className="flex h-[calc(100vh-4rem)] flex-col justify-between">
       <ul className="min-h mx-2 my-4 flex flex-col gap-4">

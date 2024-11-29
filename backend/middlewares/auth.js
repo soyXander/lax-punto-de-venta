@@ -4,15 +4,32 @@ import Role from "../models/role.js"
 
 export const validateToken = passport.authenticate("jwt", { session: false })
 
-export const validateRole = (role) => {
+export const validateRole = (roles) => {
   return async (req, res, next) => {
-    const user = req.user
-    const userRole = await Role.findById(user.roleId)
+    try {
+      if (!req.user) {
+        return res.status(401).json({ error: "Usuario no autenticado" })
+      }
 
-    if (userRole.name !== role) {
-      return res.status(403).json({ error: "No tienes permiso para realizar esta acción" })
+      const role = await Role.findOne(req.user.roleId)
+      if (!role) {
+        return res.status(400).json({ error: "Rol no válido" })
+      }
+
+      const allowedRoles = Array.isArray(roles) ? roles : [roles]
+      if (!allowedRoles.includes(role.name)) {
+        return res
+          .status(403)
+          .json({ error: "No tienes permiso para realizar esta acción" })
+      }
+
+      next()
+    } catch (error) {
+      console.error(error)
+      res
+        .status(500)
+        .json({ error: "Error al validar el rol: " + error.message })
     }
-    next()
   }
 }
 

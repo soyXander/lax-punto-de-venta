@@ -13,19 +13,28 @@ const ProductFormModal = ({
     barcode: "",
     price: "",
     stock: "",
-    category: ""
+    categoryId: ""
   })
 
   // Cargar los datos del producto cuando el modal se abre para editar
   useEffect(() => {
     if (product) {
       setFormData({
-        name: product.name,
-        description: product.description,
-        barcode: product.barcode,
-        price: product.price,
-        stock: product.stock,
-        category: product.category ? product.category._id : ""
+        name: product.name || "",
+        description: product.description || "",
+        barcode: product.barcode || "",
+        categoryId: product.categoryId || "",
+        price: product.price || "",
+        stock: product.stock || "",
+      })
+    } else {
+      setFormData({
+        name: "",
+        description: "",
+        barcode: "",
+        categoryId: "",
+        price: "",
+        stock: "",
       })
     }
   }, [product])
@@ -65,7 +74,6 @@ const ProductFormModal = ({
               setFormData({ ...formData, description: e.target.value })
             }
             className="placeholder:text-neutral w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 focus:border-primary"
-            required
           />
           <input
             type="text"
@@ -98,12 +106,12 @@ const ProductFormModal = ({
             required
           />
           <select
-            value={formData.category}
+            value={formData.categoryId}
             onChange={(e) =>
-              setFormData({ ...formData, category: e.target.value })
+              setFormData({ ...formData, categoryId: e.target.value })
             }
             className="placeholder:text-neutral w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 focus:border-primary"
-            required
+            
           >
             <option value="">Seleccione una categoría</option>
             {categories.map((category) => (
@@ -121,7 +129,6 @@ const ProductFormModal = ({
             </button>
           </div>
         </form>
-        <p className="py-4">Presione ESC para cerrar.</p>
       </div>
     </dialog>
   )

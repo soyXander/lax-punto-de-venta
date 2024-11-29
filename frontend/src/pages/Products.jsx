@@ -17,6 +17,7 @@ const Products = () => {
 
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [editProduct, setEditProduct] = useState(null)
+  const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
     if (session && session.token) {
@@ -57,6 +58,7 @@ const Products = () => {
         await createProduct(formData)
       }
       setIsPopupOpen(false)
+      setEditProduct(null)
       // Volver a cargar los productos después de agregar o editar
       const products = await getAllProducts(session.token)
       setProducts(products)
@@ -92,7 +94,7 @@ const Products = () => {
       if (!confirm("Estas seguro de que deseas eliminar estos productos?")) {
         return
       }
-      
+
       for (const productId of selectedProducts) {
         await deleteProduct(productId)
       }
@@ -104,6 +106,12 @@ const Products = () => {
       console.error("Error al eliminar productos:", error)
     }
   }
+
+  const filteredProducts = searchTerm
+    ? products.filter((product) => {
+        return product.name.toLowerCase().includes(searchTerm.toLowerCase())
+      })
+    : products
 
   return (
     <>
@@ -117,12 +125,11 @@ const Products = () => {
         <div className="flex">
           <input
             type="text"
-            placeholder="Buscar producto..."
+            placeholder="🔎 Buscar producto..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 hover:border-primary focus:border-primary focus:outline-none"
           />
-          <button className="rounded-xl border bg-primary bg-opacity-70 px-3 py-1 text-white transition-colors duration-300 hover:bg-opacity-100">
-            Buscar
-          </button>
         </div>
       </div>
       <table className="w-full table-auto border border-black text-center">
@@ -139,37 +146,39 @@ const Products = () => {
           </tr>
         </thead>
         <tbody>
-          {products &&
-            products.map((product) => (
-              <tr key={product._id} className="border-2 border-gray-100">
-                <td>
-                  <input
-                    type="checkbox"
-                    onChange={() => handleCheckboxChange(product._id)}
-                  />
-                </td>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>{product.barcode}</td>
-                <td>
-                  {product.category ? product.category.name : "Sin categoría"}
-                </td>
-                <td>${product.price}</td>
-                <td>{product.stock}</td>
-                <td>
-                  <button onClick={() => handleEditProduct(product)}>✏️</button>
-                  <button onClick={() => handleDeleteProduct(product._id)}>
-                    ❌
-                  </button>
-                </td>
-              </tr>
-            ))}
+          {filteredProducts.map((product) => (
+            <tr key={product._id} className="border-2 border-gray-100">
+              <td>
+                <input
+                  type="checkbox"
+                  onChange={() => handleCheckboxChange(product._id)}
+                />
+              </td>
+              <td>{product.name}</td>
+              <td>{product.description}</td>
+              <td>{product.barcode}</td>
+              <td>
+                {product.categoryId ? product.categoryId.name : "Sin categoría"}
+              </td>
+              <td>${product.price}</td>
+              <td>{product.stock}</td>
+              <td>
+                <button onClick={() => handleEditProduct(product)}>✏️</button>
+                <button onClick={() => handleDeleteProduct(product._id)}>
+                  ❌
+                </button>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
 
       <ProductFormModal
         isOpen={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
+        onClose={() => {
+          setIsPopupOpen(false)
+          setEditProduct(null)
+        }}
         onSave={handleSaveProduct}
         product={editProduct}
         categories={categories}

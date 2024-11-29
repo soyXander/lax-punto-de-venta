@@ -10,6 +10,7 @@ import Login from "./pages/Login.jsx"
 import POS from "./pages/POS.jsx"
 import Products from "./pages/Products.jsx"
 import Ventas from "./pages/Sales.jsx"
+import Users from "./pages/Users.jsx"
 import PrivateRoute from "./utils/PrivateRoute.jsx"
 
 const router = createBrowserRouter([
@@ -55,7 +56,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/usuarios",
-    element: <Layout component="Usuarios" />
+    element: (
+      <PrivateRoute>
+        <Layout component={<Users />} />
+      </PrivateRoute>
+    )
   },
   {
     path: "/clientes",

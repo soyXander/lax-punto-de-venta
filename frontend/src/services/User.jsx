@@ -1,8 +1,13 @@
-const API_URL = "http://localhost:3000/api/usuarios/"
+const API_URL = "http://localhost:3000/api/usuario/"
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (token) => {
   try {
-    const res = await fetch(API_URL)
+    const res = await fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+
     if (res.ok) {
       const data = await res.json()
       return data
@@ -12,9 +17,13 @@ export const getAllUsers = async () => {
   }
 }
 
-export const getUserById = async (id) => {
+export const getUserById = async (id, token) => {
   try {
-    const res = await fetch(API_URL + id)
+    const res = await fetch(API_URL + id, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
     if (res.ok) {
       const data = await res.json()
       return data
@@ -24,12 +33,13 @@ export const getUserById = async (id) => {
   }
 }
 
-export const createUser = async (user) => {
+export const createUser = async (user, token) => {
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(user)
     })
@@ -42,12 +52,13 @@ export const createUser = async (user) => {
   }
 }
 
-export const updateUser = async (id, user) => {
+export const updateUser = async (id, user, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(user)
     })
@@ -60,12 +71,12 @@ export const updateUser = async (id, user) => {
   }
 }
 
-export const deleteUser = async (id) => {
+export const deleteUser = async (id, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "DELETE",
       headers: {
-        "Autorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       }
     })
     if (res.ok) {

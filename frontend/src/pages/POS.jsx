@@ -38,11 +38,22 @@ const POS = () => {
   }, [session])
 
   useEffect(() => {
-    setSubtotal(
-      sales.reduce((acc, item) => acc + item.product.precio * item.quantity, 0)
+    const calculatedSubtotal = sales.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0
     )
-    setTotal(subtotal - subtotal * (discount / 100))
+    const calculatedTotal = calculatedSubtotal - discount
+
+    setSubtotal(calculatedSubtotal)
+    setTotal(calculatedTotal)
   }, [sales, discount])
+
+  useEffect(() => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    )
+    setFilteredProducts(filtered)
+  }, [search, products])
 
   const handleAddProduct = () => {}
 
@@ -131,22 +142,24 @@ const POS = () => {
     <div className="bg-base flex min-h-dvh flex-col">
       <header className="flex h-12 shrink-0 items-center">
         <div>
-          <button className="m-1 rounded-md bg-primary bg-opacity-70 p-2 text-3xl font-bold text-white duration-300 hover:bg-opacity-100">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-              />
-            </svg>
-          </button>
+          <a href="/">
+            <button className="m-1 rounded-md bg-primary bg-opacity-70 p-2 text-3xl font-bold text-white duration-300 hover:bg-opacity-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="h-6 w-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
+                />
+              </svg>
+            </button>
+          </a>
         </div>
       </header>
       <main className="flex flex-grow flex-row justify-center gap-x-3 px-8">
@@ -170,31 +183,32 @@ const POS = () => {
             </div>
           </div>
           <div className="flex h-[calc(100vh-13rem)] flex-wrap justify-evenly gap-y-3 overflow-y-scroll bg-gray-200 py-3">
-            {products &&
-              products.map((product) => (
-                <article
-                  className="flex max-w-[320px] flex-col items-center justify-center rounded-lg border-4 border-transparent bg-secondary bg-opacity-50 p-3 text-neutral shadow-md duration-500 hover:border-primary hover:shadow-2xl"
-                  key={product._id}
-                  onClick={() => handleProductToCart(product)}
-                >
-                  <img
-                    className="mb-3 rounded-lg"
-                    src="https://www.shutterstock.com/shutterstock/photos/2232098881/display_1500/stock-photo-different-fresh-vegetables-for-eating-healthy-fresh-vegetables-in-basket-isolated-on-white-2232098881.jpg"
-                    alt="Producto"
-                  />
-                  <div className="flex w-full flex-col items-start justify-start">
-                    <h2 className="font-bold">{product.name}</h2>
-                    <p>
-                      ${product.price}{" "}
-                      <span className="text-xs font-bold text-accent">
-                        Stock: {product.stock}
-                      </span>
-                    </p>
-                  </div>
-                </article>
-              ))}
+            <div className="flex h-[calc(100vh-13rem)] flex-wrap justify-evenly gap-y-3 overflow-y-scroll bg-gray-200 py-3">
+              {filteredProducts &&
+                filteredProducts.map((product) => (
+                  <article
+                    className="flex max-w-[320px] flex-col items-center justify-center rounded-lg border-4 border-transparent bg-secondary bg-opacity-50 p-3 text-neutral shadow-md duration-500 hover:border-primary hover:shadow-2xl"
+                    key={product._id}
+                    onClick={() => handleProductToCart(product)}
+                  >
+                    <img
+                      className="mb-3 rounded-lg"
+                      src="https://www.shutterstock.com/shutterstock/photos/2232098881/display_1500/stock-photo-different-fresh-vegetables-for-eating-healthy-fresh-vegetables-in-basket-isolated-on-white-2232098881.jpg"
+                      alt="Producto"
+                    />
+                    <div className="flex w-full flex-col items-start justify-start">
+                      <h2 className="font-bold">{product.name}</h2>
+                      <p>
+                        ${product.price}{" "}
+                        <span className="text-xs font-bold text-accent">
+                          Stock: {product.stock}
+                        </span>
+                      </p>
+                    </div>
+                  </article>
+                ))}
+            </div>
           </div>
-
           <div className="flex h-12">
             {categories &&
               categories.map((category) => (
@@ -303,7 +317,7 @@ const POS = () => {
             </li>
             <li className="flex justify-between">
               <span>Subtotal:</span>
-              <span>${subtotal}</span>
+              <span>${subtotal.toFixed(2)}</span>
             </li>
             <li className="flex justify-between">
               <span>Total:</span>

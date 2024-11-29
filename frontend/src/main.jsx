@@ -2,12 +2,13 @@ import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from "./App.jsx"
-import Listado from "./components/Listado.jsx"
 import { AuthProvider } from "./contexts/AuthContext.jsx"
 import "./index.css"
 import Layout from "./pages/Layout.jsx"
 import Login from "./pages/Login.jsx"
 import POS from "./pages/POS.jsx"
+import Products from "./pages/Products.jsx"
+import Ventas from "./pages/Sales.jsx"
 import PrivateRoute from "./utils/PrivateRoute.jsx"
 
 const router = createBrowserRouter([
@@ -29,11 +30,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/productos",
-    element: <Layout component={<Listado titulo="Productos" />} />
+    element: (
+      <PrivateRoute>
+        <Layout component={<Products />} />
+      </PrivateRoute>
+    )
   },
   {
     path: "/ventas",
-    element: <Layout component="Ventas" />
+    element: (
+      <PrivateRoute>
+        <Layout component={<Ventas />} />
+      </PrivateRoute>
+    )
   },
   {
     path: "/usuarios",

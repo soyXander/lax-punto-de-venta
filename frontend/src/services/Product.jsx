@@ -20,7 +20,7 @@ export const getProductById = async (id) => {
   try {
     const res = await fetch(API_URL + id, {
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     })
     if (res.ok) {
@@ -38,7 +38,7 @@ export const createProduct = async (product) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(product)
     })
@@ -57,7 +57,7 @@ export const updateProduct = async (id, product) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(product)
     })
@@ -75,7 +75,7 @@ export const deleteProduct = async (id) => {
     const res = await fetch(API_URL + id, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     })
     if (res.ok) {

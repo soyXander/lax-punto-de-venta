@@ -19,13 +19,13 @@ const CategoryFormModal = ({
       setFormData({
         name: category.name || "",
         description: category.description || "",
-        parent: category.parent || "",
+        parent: category.parent || ""
       })
     } else {
       setFormData({
         name: "",
         description: "",
-        parent: "",
+        parent: ""
       })
     }
   }, [category])
@@ -34,10 +34,10 @@ const CategoryFormModal = ({
     e.preventDefault()
     const dataToSave = {
       ...formData,
-      parent: formData.parent === "" ? null : formData.parent,
+      parent: formData.parent === "" ? null : formData.parent
     }
-  
-    onSave(dataToSave)  
+
+    onSave(dataToSave)
   }
 
   if (!isOpen) return null
@@ -60,7 +60,7 @@ const CategoryFormModal = ({
             placeholder="Nombre de la categoría..."
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="placeholder:text-neutral w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 focus:border-primary"
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
             required
           />
           <textarea
@@ -69,14 +69,14 @@ const CategoryFormModal = ({
             onChange={(e) =>
               setFormData({ ...formData, description: e.target.value })
             }
-            className="placeholder:text-neutral w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 focus:border-primary"
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
           />
           <select
             value={formData.parent}
             onChange={(e) =>
               setFormData({ ...formData, parent: e.target.value })
             }
-            className="placeholder:text-neutral w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 focus:border-primary"
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
           >
             <option value="">Seleccione una categoría padre (opcional)</option>
             {categories.map((category) => (

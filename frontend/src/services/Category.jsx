@@ -1,24 +1,19 @@
 const API_URL = "http://localhost:3000/api/categoria/"
 
 export const getAllCategories = async (token) => {
-  if (!token) {
-    console.error("No token provided")
-    return
-  }
   try {
     const res = await fetch(API_URL, {
       headers: {
-        Authorization: `Bearer ${token}` // Token en el header
+        Authorization: `Bearer ${token}`
       }
     })
-    if (res.ok) {
-      const data = await res.json()
-      return data
-    } else {
-      console.error("Error fetching categories:", res.status)
+    if (!res.ok) {
+      throw new Error(res.json().message)
     }
+    const data = await res.json()
+    return data
   } catch (error) {
-    console.error("Error fetching categories:", error)
+    console.error(error)
   }
 }
 

@@ -16,11 +16,11 @@ export const getAllProducts = async (token) => {
   }
 }
 
-export const getProductById = async (id) => {
+export const getProductById = async (id, token) => {
   try {
     const res = await fetch(API_URL + id, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       }
     })
     if (res.ok) {
@@ -32,13 +32,13 @@ export const getProductById = async (id) => {
   }
 }
 
-export const createProduct = async (product) => {
+export const createProduct = async (product, token) => {
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(product)
     })
@@ -51,13 +51,13 @@ export const createProduct = async (product) => {
   }
 }
 
-export const updateProduct = async (id, product) => {
+export const updateProduct = async (id, product, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(product)
     })
@@ -70,12 +70,12 @@ export const updateProduct = async (id, product) => {
   }
 }
 
-export const deleteProduct = async (id) => {
+export const deleteProduct = async (id, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${token}`
       }
     })
     if (res.ok) {

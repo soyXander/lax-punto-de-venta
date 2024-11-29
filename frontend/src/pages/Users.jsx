@@ -129,7 +129,7 @@ const Users = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredUsers.map((user) => (
+          {filteredUsers && filteredUsers.map((user) => (
             <tr key={user._id} className="border-2 border-gray-100">
               <td>
                 <input

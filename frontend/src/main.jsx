@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from "./App.jsx"
 import { AuthProvider } from "./contexts/AuthContext.jsx"
 import "./index.css"
+import Categories from "./pages/Categories.jsx"
 import Layout from "./pages/Layout.jsx"
 import Login from "./pages/Login.jsx"
 import POS from "./pages/POS.jsx"
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <Layout component={<Products />} />
+      </PrivateRoute>
+    )
+  },
+  {
+    path: "/categorias",
+    element: (
+      <PrivateRoute>
+        <Layout component={<Categories />} />
       </PrivateRoute>
     )
   },

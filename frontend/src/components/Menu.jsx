@@ -14,6 +14,10 @@ const menuItems = [
     path: "/productos"
   },
   {
+    name: "Categorias",
+    path: "/categorias"
+  },
+  {
     name: "Ventas",
     path: "/ventas"
   },

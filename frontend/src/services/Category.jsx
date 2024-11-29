@@ -33,12 +33,13 @@ export const getCategoryById = async (id, token) => {
   }
 }
 
-export const createCategory = async (category) => {
+export const createCategory = async (category, token) => {
   try {
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(category)
     })
@@ -51,12 +52,13 @@ export const createCategory = async (category) => {
   }
 }
 
-export const updateCategory = async (id, category) => {
+export const updateCategory = async (id, category, token) => {
   try {
     const res = await fetch(API_URL + id, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(category)
     })
@@ -69,10 +71,13 @@ export const updateCategory = async (id, category) => {
   }
 }
 
-export const deleteCategory = async (id) => {
+export const deleteCategory = async (id, token) => {
   try {
     const res = await fetch(API_URL + id, {
-      method: "DELETE"
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     })
     if (res.ok) {
       const data = await res.json()

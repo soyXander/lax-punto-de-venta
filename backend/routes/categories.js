@@ -4,7 +4,7 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const categories = await Category.find()
     res.json(categories)
@@ -16,7 +16,7 @@ router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, r
   }
 })
 
-router.get("/:id/productos", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.get("/:id/productos", async (req, res) => {
   try {
     const category = await Category.findById(req.params.id).populate("products")
     if (!category) {
@@ -25,19 +25,21 @@ router.get("/:id/productos", validateToken, validateRole(["admin", "cashier"]), 
     res.json(category.products)
   } catch (error) {
     console.error(error)
-    res
-      .status(500)
-      .json({
-        error: "Error al obtener los productos de la categoria: " + error
-      })
+    res.status(500).json({
+      error: "Error al obtener los productos de la categoria: " + error
+    })
   }
 })
 
-router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
-  const { name } = req.body
+router.post("/", async (req, res) => {
+  const { name, description, parent } = req.body
 
   try {
-    const category = new Category({ name })
+    const category = new Category({
+      name,
+      description,
+      parent: parent === "" ? null : parent
+    })
     await category.save()
     res.json(category)
   } catch (error) {
@@ -46,15 +48,23 @@ router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
   }
 })
 
-router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.put("/:id", async (req, res) => {
+  const { name, description, parent } = req.body
+
   try {
     const category = await Category.findById(req.params.id)
     if (!category) {
       return res.status(404).json({ error: "Categoria no encontrada" })
     }
+
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
-      { ...req.body, updatedAt: Date.now() },
+      {
+        name,
+        description,
+        parent: parent === "" ? null : parent,
+        updatedAt: Date.now()
+      },
       { new: true }
     )
     res.json(updatedCategory)
@@ -66,7 +76,7 @@ router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   }
 })
 
-router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const category = await Category.findById(req.params.id)
     if (!category) {

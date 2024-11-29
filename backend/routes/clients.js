@@ -5,7 +5,7 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 const router = express.Router()
 
 // Obtenemos todos los clientes
-router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.get("/",  async (req, res) => {
   try {
     const clients = await Client.find()
     res.json(clients)
@@ -17,7 +17,7 @@ router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, r
 })
 
 // Crear un nuevo cliente
-router.post("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.post("/", async (req, res) => {
   const { name, lastname, email, phone } = req.body
 
   try {
@@ -44,7 +44,7 @@ router.post("/", validateToken, validateRole(["admin", "cashier"]), async (req, 
 })
 
 // Actualizar cliente por ID
-router.put("/:id", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const client = await Client.findById(req.params.id)
     if (!client) {
@@ -64,7 +64,7 @@ router.put("/:id", validateToken, validateRole(["admin", "cashier"]), async (req
 })
 
 // Eliminar cliente por ID
-router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const client = await Client.findById(req.params.id)
     if (!client) {

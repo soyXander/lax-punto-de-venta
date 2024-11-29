@@ -8,7 +8,7 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 const router = express.Router()
 
 // Obtenemos todos los usuarios
-router.get("/", validateToken, validateRole(["admin"]), async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const users = await User.find()
     res.json(users)
@@ -21,7 +21,7 @@ router.get("/", validateToken, validateRole(["admin"]), async (req, res) => {
 })
 
 // Crear usuario nuevo
-router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
+router.post("/", async (req, res) => {
   const {
     name,
     lastName,
@@ -66,7 +66,7 @@ router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
 })
 
 // Actualizar usuario por Id
-router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {
@@ -85,7 +85,7 @@ router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
 })
 
 // Eliminar un usuario por Id
-router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id)
     if (!user) {

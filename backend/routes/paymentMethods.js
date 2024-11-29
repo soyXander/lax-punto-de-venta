@@ -4,7 +4,7 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const paymentMethods = await PaymentMethod.find()
     res.json(paymentMethods)
@@ -16,7 +16,7 @@ router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, r
   }
 })
 
-router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
+router.post("/", async (req, res) => {
   const { name } = req.body
 
   try {
@@ -31,7 +31,7 @@ router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
   }
 })
 
-router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const paymentMethod = await PaymentMethod.findById(req.params.id)
     if (!paymentMethod) {
@@ -51,7 +51,7 @@ router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   }
 })
 
-router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const paymentMethod = await PaymentMethod.findById(req.params.id)
     if (!paymentMethod) {

@@ -4,7 +4,7 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", validateToken, validateRole(["admin"]), async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const roles = await Role.find()
     res.json(roles)

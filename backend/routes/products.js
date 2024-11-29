@@ -4,7 +4,7 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 
 const router = express.Router()
 
-router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
+router.get("/", async (req, res) => {
     try {
       const products = await Product.find().populate("categoryId")
       res.json(products)
@@ -17,7 +17,7 @@ router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, r
   }
 )
 
-router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
+router.post("/", async (req, res) => {
   const { name, description, barcode, categoryId, price, stock } = req.body
 
   try {
@@ -39,7 +39,7 @@ router.post("/", validateToken, validateRole(["admin"]), async (req, res) => {
   }
 })
 
-router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
     if (!product) {
@@ -57,7 +57,7 @@ router.put("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
   }
 })
 
-router.delete("/:id", validateToken, validateRole(["admin"]), async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
     if (!product) {

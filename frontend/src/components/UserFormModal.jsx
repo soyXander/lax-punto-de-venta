@@ -20,140 +20,107 @@ const UserFormModal = ({ isOpen, onClose, onSave, user }) => {
         password: "",
         roleId: user.roleId || ""
       })
+    } else {
+      setFormData({
+        name: "",
+        lastName: "",
+        username: "",
+        email: "",
+        password: "",
+        roleId: ""
+      })
     }
   }, [user])
-
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     onSave(formData)
   }
 
-  const handleClose = () => {
-    onClose()
-    setFormData({
-      name: "",
-      lastName: "",
-      username: "",
-      email: "",
-      password: "",
-      roleId: ""
-    })
-  }
-
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="w-1/3 rounded-lg bg-white p-6">
-        <h2 className="mb-4 text-2xl">
+    <dialog open className="modal bg-black bg-opacity-50">
+      <div className="modal-box">
+        <button
+          className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+          onClick={onClose}
+        >
+          ✕
+        </button>
+        <h3 className="text-lg font-bold">
           {user ? "Editar Usuario" : "Agregar Usuario"}
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="name" className="block">
-              Nombre
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-          <div>
-            <label htmlFor="lastName" className="block">
-              Apellido
-            </label>
-            <input
-              id="lastName"
-              name="lastName"
-              type="text"
-              value={formData.lastName}
-              onChange={handleChange}
-              required
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-          <div>
-            <label htmlFor="username" className="block">
-              Nombre de Usuario
-            </label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              value={formData.username}
-              onChange={handleChange}
-              required
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-          <div>
-            <label htmlFor="email" className="block">
-              Correo Electrónico
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block">
-              Contraseña
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              required={!user}
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-          <div>
-            <label htmlFor="roleId" className="block">
-              Rol
-            </label>
-            <input
-              id="roleId"
-              name="roleId"
-              type="text"
-              value={formData.roleId}
-              onChange={handleChange}
-              required
-              className="w-full rounded border border-gray-300 p-2"
-            />
-          </div>
-
-          <div className="flex justify-end space-x-4">
-            <button
-              type="button"
-              onClick={handleClose}
-              className="btn btn-secondary"
-            >
+        </h3>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+          <input
+            type="text"
+            placeholder="Nombre..."
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Apellido..."
+            value={formData.lastName}
+            onChange={(e) =>
+              setFormData({ ...formData, lastName: e.target.value })
+            }
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Nombre de Usuario..."
+            value={formData.username}
+            onChange={(e) =>
+              setFormData({ ...formData, username: e.target.value })
+            }
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
+            required
+          />
+          <input
+            type="email"
+            placeholder="Correo Electrónico..."
+            value={formData.email}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Contraseña..."
+            value={formData.password}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
+            required={!user}
+          />
+          <input
+            type="text"
+            placeholder="Rol..."
+            value={formData.roleId}
+            onChange={(e) =>
+              setFormData({ ...formData, roleId: e.target.value })
+            }
+            className="w-full rounded-full border-2 border-transparent bg-secondary bg-opacity-20 p-2 text-center text-neutral duration-300 placeholder:text-neutral focus:border-primary"
+            required
+          />
+          <div className="modal-action">
+            <button className="btn" onClick={onClose}>
               Cancelar
             </button>
-            <button type="submit" className="btn btn-primary">
-              {user ? "Actualizar" : "Guardar"}
+            <button className="btn btn-primary" type="submit">
+              {user ? "Actualizar Usuario" : "Agregar Usuario"}
             </button>
           </div>
         </form>
       </div>
-    </div>
+    </dialog>
   )
 }
 

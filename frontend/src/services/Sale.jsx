@@ -20,7 +20,7 @@ export const getSaleById = async (id) => {
   try {
     const res = await fetch(API_URL + id, {
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     })
     if (res.ok) {
@@ -38,7 +38,7 @@ export const createSale = async (sale) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(sale)
     })
@@ -57,7 +57,7 @@ export const updateSale = async (id, sale) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
       body: JSON.stringify(sale)
     })
@@ -75,7 +75,7 @@ export const deleteSale = async (id) => {
     const res = await fetch(API_URL + id, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       }
     })
     if (res.ok) {

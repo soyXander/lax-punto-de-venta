@@ -6,7 +6,7 @@ const router = express.Router()
 
 router.get("/", validateToken, validateRole(["admin", "cashier"]), async (req, res) => {
     try {
-      const products = await Product.find()
+      const products = await Product.find().populate("categoryId")
       res.json(products)
     } catch (error) {
       console.error(error)

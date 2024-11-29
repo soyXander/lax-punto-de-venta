@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react"
-import { getAllProducts } from "../services/Product"
+import { getAllProducts, createProduct } from "../services/Product"
 import { getAllCategories } from "../services/Category"
 import { createSale } from "../services/Sale"
 import { getAllClients } from "../services/Client"
 import { useAuth } from "../contexts/AuthContext"
+import ProductFormModal from "../components/ProductFormModal"
 
 const POS = () => {
   const { session } = useAuth()
@@ -18,6 +19,7 @@ const POS = () => {
   const [subtotal, setSubtotal] = useState(0)
   const [total, setTotal] = useState(0)
   const [discount, setDiscount] = useState(0)
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
 
   useEffect(() => {
     if (session && session.token) {
@@ -55,7 +57,20 @@ const POS = () => {
     setFilteredProducts(filtered)
   }, [search, products])
 
-  const handleAddProduct = () => {}
+  const handleAddProduct = () => {
+    setIsPopupOpen(true)
+  }
+
+  const handleSaveProduct = async (formData) => {
+    try {
+      await createProduct(formData)
+      setIsPopupOpen(false)
+      const products = await getAllProducts(session.token)
+      setProducts(products)
+    } catch (error) {
+      console.error("Error al guardar el producto:", error)
+    }
+  }
 
   const handleProductToCart = (product) => {
     const existingProduct = sales.find(
@@ -103,8 +118,6 @@ const POS = () => {
   const handleSelectClient = (client) => {
     setSelectedClient(client)
   }
-
-  const handleFinishSale = () => {}
 
   const cancelSale = () => {
     setSales([])
@@ -183,31 +196,29 @@ const POS = () => {
             </div>
           </div>
           <div className="flex h-[calc(100vh-13rem)] flex-wrap justify-evenly gap-y-3 overflow-y-scroll bg-gray-200 py-3">
-            <div className="flex h-[calc(100vh-13rem)] flex-wrap justify-evenly gap-y-3 overflow-y-scroll bg-gray-200 py-3">
-              {filteredProducts &&
-                filteredProducts.map((product) => (
-                  <article
-                    className="flex max-w-[320px] flex-col items-center justify-center rounded-lg border-4 border-transparent bg-secondary bg-opacity-50 p-3 text-neutral shadow-md duration-500 hover:border-primary hover:shadow-2xl"
-                    key={product._id}
-                    onClick={() => handleProductToCart(product)}
-                  >
-                    <img
-                      className="mb-3 rounded-lg"
-                      src="https://www.shutterstock.com/shutterstock/photos/2232098881/display_1500/stock-photo-different-fresh-vegetables-for-eating-healthy-fresh-vegetables-in-basket-isolated-on-white-2232098881.jpg"
-                      alt="Producto"
-                    />
-                    <div className="flex w-full flex-col items-start justify-start">
-                      <h2 className="font-bold">{product.name}</h2>
-                      <p>
-                        ${product.price}{" "}
-                        <span className="text-xs font-bold text-accent">
-                          Stock: {product.stock}
-                        </span>
-                      </p>
-                    </div>
-                  </article>
-                ))}
-            </div>
+            {filteredProducts &&
+              filteredProducts.map((product) => (
+                <article
+                  className="flex max-w-[320px] flex-col items-center justify-center rounded-lg border-4 border-transparent bg-secondary bg-opacity-50 p-3 text-neutral shadow-md duration-500 hover:border-primary hover:shadow-2xl"
+                  key={product._id}
+                  onClick={() => handleProductToCart(product)}
+                >
+                  <img
+                    className="mb-3 rounded-lg"
+                    src="https://www.shutterstock.com/shutterstock/photos/2232098881/display_1500/stock-photo-different-fresh-vegetables-for-eating-healthy-fresh-vegetables-in-basket-isolated-on-white-2232098881.jpg"
+                    alt="Producto"
+                  />
+                  <div className="flex w-full flex-col items-start justify-start">
+                    <h2 className="font-bold">{product.name}</h2>
+                    <p>
+                      ${product.price}{" "}
+                      <span className="text-xs font-bold text-accent">
+                        Stock: {product.stock}
+                      </span>
+                    </p>
+                  </div>
+                </article>
+              ))}
           </div>
           <div className="flex h-12">
             {categories &&
@@ -347,6 +358,15 @@ const POS = () => {
           </button>
         </div>
       </footer>
+      <ProductFormModal
+        isOpen={isPopupOpen}
+        onClose={() => {
+          setIsPopupOpen(false)
+        }}
+        onSave={handleSaveProduct}
+        //product={editProduct}
+        categories={categories}
+      />
     </div>
   )
 }

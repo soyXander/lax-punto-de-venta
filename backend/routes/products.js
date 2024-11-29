@@ -5,17 +5,31 @@ import { validateRole, validateToken } from "../middlewares/auth.js"
 const router = express.Router()
 
 router.get("/", async (req, res) => {
-    try {
-      const products = await Product.find().populate("categoryId")
-      res.json(products)
-    } catch (error) {
-      console.error(error)
-      res
-        .status(500)
-        .json({ error: "error al obtener los productos: " + error.message })
-    }
+  try {
+    const products = await Product.find().populate("categoryId")
+    res.json(products)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .json({ error: "error al obtener los productos: " + error.message })
   }
-)
+})
+
+router.get("/:id", async (req, res) => {
+  try {
+    const product = await Product.findById(req.params.id).populate("categoryId")
+    if (!product) {
+      return res.status(404).json({ error: "producto no encontrado" })
+    }
+    res.json(product)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .json({ error: "error al obtener el producto: " + error.message })
+  }
+})
 
 router.post("/", async (req, res) => {
   const { name, description, barcode, categoryId, price, stock } = req.body

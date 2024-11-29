@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useAuth } from "../contexts/AuthContext"
+import Logo from "../components/Logo"
 
 const Login = () => {
   const [username, setUsername] = useState("")
@@ -13,7 +14,8 @@ const Login = () => {
   }
 
   return (
-    <div className="flex h-full items-center justify-center bg-base">
+    <div className="flex flex-col h-full items-center justify-center bg-base">
+
       <form className="text gray-500 m-20 flex flex-col gap-y-6 rounded-lg border bg-secondary bg-opacity-70 p-10 text-neutral">
         <input
           className="rounded-lg bg-base py-1 text-center text-neutral outline-none"

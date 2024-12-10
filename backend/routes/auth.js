@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt"
 import express from "express"
 import jwt from "jsonwebtoken"
 import { validateLogin } from "../middlewares/auth.js"
@@ -15,13 +14,13 @@ router.post("/login", [validateLogin], async (req, res) => {
   }
 
   try {
-    const user = await User.findOne({ username })
+    const user = await User.findOne({ username }).select("+password")
 
     if (!user) {
       return res.status(401).json({ error: "Credenciales incorrectas" })
     }
 
-    const passwordMatch = await bcrypt.compare(password, user.password)
+    const passwordMatch = user.checkPassword(password)
 
     if (!passwordMatch) {
       return res.status(401).json({ error: "Credenciales incorrectas" })

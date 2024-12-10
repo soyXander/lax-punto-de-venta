@@ -1,4 +1,3 @@
-import bcrypt from "bcrypt"
 import express from "express"
 import jwt from "jsonwebtoken"
 import User from "../models/user.js"
@@ -38,14 +37,11 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ error: "Rol no valido" })
     }
 
-    const salt = await bcrypt.genSalt(10)
-    const hashedPassword = await bcrypt.hash(password, salt)
-
     const user = new User({
       name,
       lastName,
       username,
-      password: hashedPassword,
+      password,
       email,
       roleId: role._id
     })
